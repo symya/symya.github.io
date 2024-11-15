@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://symya.github.io/2024/11/e5e321b44b6d.html</loc>
+    
+    <lastmod>2024-11-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://symya.github.io/2024/10/35990125633d.html</loc>
     
     <lastmod>2024-10-22</lastmod>
@@ -213,6 +222,20 @@
   
   <url>
     <loc>https://symya.github.io/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/</loc>
+    <lastmod>2024-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://symya.github.io/tags/SQL%E6%B3%A8%E5%85%A5/</loc>
+    <lastmod>2024-11-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://symya.github.io/tags/web%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2024-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
