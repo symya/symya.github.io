@@ -1,3 +1,4 @@
+https://symya.github.io/2024/12/bc1a8560f326.html
 https://symya.github.io/2024/12/3dc9fb4d1b9a.html
 https://symya.github.io/2024/11/3f383f110e98.html
 https://symya.github.io/2024/11/e5e321b44b6d.html
@@ -32,6 +33,8 @@ https://symya.github.io/tags/SQL%E6%B3%A8%E5%85%A5/
 https://symya.github.io/tags/web%E5%9F%BA%E7%A1%80/
 https://symya.github.io/tags/xxe/
 https://symya.github.io/tags/filter/
+https://symya.github.io/tags/disable-functions/
+https://symya.github.io/tags/ssti/
 https://symya.github.io/categories/%E6%AF%94%E8%B5%9B%E5%A4%8D%E7%8E%B0/
 https://symya.github.io/categories/%E5%85%B6%E4%BB%96/
 https://symya.github.io/categories/web%E5%AE%89%E5%85%A8/
